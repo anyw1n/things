@@ -90,8 +90,24 @@ linter:
     - use_truncating_division
 
 dcm:
-  extends:
-    - metrics-recommended
+  metrics:
+    # Function-level
+    cyclomatic-complexity: 15
+    source-lines-of-code: 60
+    maximum-nesting-level: 5
+    number-of-parameters: 6
+    # Flutter specific
+    number-of-used-widgets: 20
+    widgets-nesting-level: 8
+    # Class-level
+    coupling-between-object-classes: 20
+    depth-of-inheritance-tree: 5
+    number-of-implemented-interfaces: 3
+    number-of-methods: 10
+    weighted-methods-per-class: 45
+    # File-level
+    number-of-external-imports: 6
+    number-of-imports: 15
   rules:
     # Common
     - avoid-cascade-after-if-null
