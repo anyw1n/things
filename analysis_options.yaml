@@ -1,6 +1,8 @@
 include: package:flutter_lints/flutter.yaml
 
 analyzer:
+  exclude:
+    - "**/*.g.dart"
   language:
     strict-casts: true
     strict-inference: true
@@ -131,7 +133,7 @@ dcm:
     - avoid-unnecessary-type-casts
     - avoid-unrelated-type-assertions
     - binary-expression-operand-order
-    - member-ordering
+    # - member-ordering
     - no-boolean-literal-compare
     - no-empty-block
     - no-equal-then-else
