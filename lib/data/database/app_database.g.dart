@@ -21,6 +21,26 @@ class $ThoughtsTable extends Thoughts with TableInfo<$ThoughtsTable, Thought> {
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
+  static const VerificationMeta _iconMeta = const VerificationMeta('icon');
+  @override
+  late final GeneratedColumn<String> icon = GeneratedColumn<String>(
+    'icon',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _contentMeta = const VerificationMeta(
     'content',
   );
@@ -29,6 +49,7 @@ class $ThoughtsTable extends Thoughts with TableInfo<$ThoughtsTable, Thought> {
     'content',
     aliasedName,
     false,
+    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
@@ -44,26 +65,8 @@ class $ThoughtsTable extends Thoughts with TableInfo<$ThoughtsTable, Thought> {
     requiredDuringInsert: false,
     defaultValue: currentDateAndTime,
   );
-  static const VerificationMeta _iconMeta = const VerificationMeta('icon');
   @override
-  late final GeneratedColumn<String> icon = GeneratedColumn<String>(
-    'icon',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _titleMeta = const VerificationMeta('title');
-  @override
-  late final GeneratedColumn<String> title = GeneratedColumn<String>(
-    'title',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, content, createdAt, icon, title];
+  List<GeneratedColumn> get $columns => [id, icon, title, content, createdAt];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -79,6 +82,22 @@ class $ThoughtsTable extends Thoughts with TableInfo<$ThoughtsTable, Thought> {
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
+    if (data.containsKey('icon')) {
+      context.handle(
+        _iconMeta,
+        icon.isAcceptableOrUnknown(data['icon']!, _iconMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_iconMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
     if (data.containsKey('content')) {
       context.handle(
         _contentMeta,
@@ -91,18 +110,6 @@ class $ThoughtsTable extends Thoughts with TableInfo<$ThoughtsTable, Thought> {
       context.handle(
         _createdAtMeta,
         createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    }
-    if (data.containsKey('icon')) {
-      context.handle(
-        _iconMeta,
-        icon.isAcceptableOrUnknown(data['icon']!, _iconMeta),
-      );
-    }
-    if (data.containsKey('title')) {
-      context.handle(
-        _titleMeta,
-        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
       );
     }
     return context;
@@ -118,6 +125,14 @@ class $ThoughtsTable extends Thoughts with TableInfo<$ThoughtsTable, Thought> {
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
+      icon: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}icon'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
       content: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}content'],
@@ -126,14 +141,6 @@ class $ThoughtsTable extends Thoughts with TableInfo<$ThoughtsTable, Thought> {
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
       )!,
-      icon: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}icon'],
-      ),
-      title: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}title'],
-      ),
     );
   }
 
@@ -145,41 +152,35 @@ class $ThoughtsTable extends Thoughts with TableInfo<$ThoughtsTable, Thought> {
 
 class Thought extends DataClass implements Insertable<Thought> {
   final int id;
+  final String icon;
+  final String title;
   final String content;
   final DateTime createdAt;
-  final String? icon;
-  final String? title;
   const Thought({
     required this.id,
+    required this.icon,
+    required this.title,
     required this.content,
     required this.createdAt,
-    this.icon,
-    this.title,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
+    map['icon'] = Variable<String>(icon);
+    map['title'] = Variable<String>(title);
     map['content'] = Variable<String>(content);
     map['created_at'] = Variable<DateTime>(createdAt);
-    if (!nullToAbsent || icon != null) {
-      map['icon'] = Variable<String>(icon);
-    }
-    if (!nullToAbsent || title != null) {
-      map['title'] = Variable<String>(title);
-    }
     return map;
   }
 
   ThoughtsCompanion toCompanion(bool nullToAbsent) {
     return ThoughtsCompanion(
       id: Value(id),
+      icon: Value(icon),
+      title: Value(title),
       content: Value(content),
       createdAt: Value(createdAt),
-      icon: icon == null && nullToAbsent ? const Value.absent() : Value(icon),
-      title: title == null && nullToAbsent
-          ? const Value.absent()
-          : Value(title),
     );
   }
 
@@ -190,10 +191,10 @@ class Thought extends DataClass implements Insertable<Thought> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Thought(
       id: serializer.fromJson<int>(json['id']),
+      icon: serializer.fromJson<String>(json['icon']),
+      title: serializer.fromJson<String>(json['title']),
       content: serializer.fromJson<String>(json['content']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      icon: serializer.fromJson<String?>(json['icon']),
-      title: serializer.fromJson<String?>(json['title']),
     );
   }
   @override
@@ -201,33 +202,33 @@ class Thought extends DataClass implements Insertable<Thought> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'icon': serializer.toJson<String>(icon),
+      'title': serializer.toJson<String>(title),
       'content': serializer.toJson<String>(content),
       'createdAt': serializer.toJson<DateTime>(createdAt),
-      'icon': serializer.toJson<String?>(icon),
-      'title': serializer.toJson<String?>(title),
     };
   }
 
   Thought copyWith({
     int? id,
+    String? icon,
+    String? title,
     String? content,
     DateTime? createdAt,
-    Value<String?> icon = const Value.absent(),
-    Value<String?> title = const Value.absent(),
   }) => Thought(
     id: id ?? this.id,
+    icon: icon ?? this.icon,
+    title: title ?? this.title,
     content: content ?? this.content,
     createdAt: createdAt ?? this.createdAt,
-    icon: icon.present ? icon.value : this.icon,
-    title: title.present ? title.value : this.title,
   );
   Thought copyWithCompanion(ThoughtsCompanion data) {
     return Thought(
       id: data.id.present ? data.id.value : this.id,
-      content: data.content.present ? data.content.value : this.content,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       icon: data.icon.present ? data.icon.value : this.icon,
       title: data.title.present ? data.title.value : this.title,
+      content: data.content.present ? data.content.value : this.content,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
     );
   }
 
@@ -235,76 +236,78 @@ class Thought extends DataClass implements Insertable<Thought> {
   String toString() {
     return (StringBuffer('Thought(')
           ..write('id: $id, ')
-          ..write('content: $content, ')
-          ..write('createdAt: $createdAt, ')
           ..write('icon: $icon, ')
-          ..write('title: $title')
+          ..write('title: $title, ')
+          ..write('content: $content, ')
+          ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, content, createdAt, icon, title);
+  int get hashCode => Object.hash(id, icon, title, content, createdAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Thought &&
           other.id == this.id &&
-          other.content == this.content &&
-          other.createdAt == this.createdAt &&
           other.icon == this.icon &&
-          other.title == this.title);
+          other.title == this.title &&
+          other.content == this.content &&
+          other.createdAt == this.createdAt);
 }
 
 class ThoughtsCompanion extends UpdateCompanion<Thought> {
   final Value<int> id;
+  final Value<String> icon;
+  final Value<String> title;
   final Value<String> content;
   final Value<DateTime> createdAt;
-  final Value<String?> icon;
-  final Value<String?> title;
   const ThoughtsCompanion({
     this.id = const Value.absent(),
-    this.content = const Value.absent(),
-    this.createdAt = const Value.absent(),
     this.icon = const Value.absent(),
     this.title = const Value.absent(),
+    this.content = const Value.absent(),
+    this.createdAt = const Value.absent(),
   });
   ThoughtsCompanion.insert({
     this.id = const Value.absent(),
+    required String icon,
+    required String title,
     required String content,
     this.createdAt = const Value.absent(),
-    this.icon = const Value.absent(),
-    this.title = const Value.absent(),
-  }) : content = Value(content);
+  }) : icon = Value(icon),
+       title = Value(title),
+       content = Value(content);
   static Insertable<Thought> custom({
     Expression<int>? id,
-    Expression<String>? content,
-    Expression<DateTime>? createdAt,
     Expression<String>? icon,
     Expression<String>? title,
+    Expression<String>? content,
+    Expression<DateTime>? createdAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (content != null) 'content': content,
-      if (createdAt != null) 'created_at': createdAt,
       if (icon != null) 'icon': icon,
       if (title != null) 'title': title,
+      if (content != null) 'content': content,
+      if (createdAt != null) 'created_at': createdAt,
     });
   }
 
   ThoughtsCompanion copyWith({
     Value<int>? id,
+    Value<String>? icon,
+    Value<String>? title,
     Value<String>? content,
     Value<DateTime>? createdAt,
-    Value<String?>? icon,
-    Value<String?>? title,
   }) {
     return ThoughtsCompanion(
       id: id ?? this.id,
-      content: content ?? this.content,
-      createdAt: createdAt ?? this.createdAt,
       icon: icon ?? this.icon,
       title: title ?? this.title,
+      content: content ?? this.content,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
@@ -314,17 +317,17 @@ class ThoughtsCompanion extends UpdateCompanion<Thought> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (content.present) {
-      map['content'] = Variable<String>(content.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
     if (icon.present) {
       map['icon'] = Variable<String>(icon.value);
     }
     if (title.present) {
       map['title'] = Variable<String>(title.value);
+    }
+    if (content.present) {
+      map['content'] = Variable<String>(content.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
     }
     return map;
   }
@@ -333,10 +336,10 @@ class ThoughtsCompanion extends UpdateCompanion<Thought> {
   String toString() {
     return (StringBuffer('ThoughtsCompanion(')
           ..write('id: $id, ')
-          ..write('content: $content, ')
-          ..write('createdAt: $createdAt, ')
           ..write('icon: $icon, ')
-          ..write('title: $title')
+          ..write('title: $title, ')
+          ..write('content: $content, ')
+          ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }
@@ -356,18 +359,18 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 typedef $$ThoughtsTableCreateCompanionBuilder =
     ThoughtsCompanion Function({
       Value<int> id,
+      required String icon,
+      required String title,
       required String content,
       Value<DateTime> createdAt,
-      Value<String?> icon,
-      Value<String?> title,
     });
 typedef $$ThoughtsTableUpdateCompanionBuilder =
     ThoughtsCompanion Function({
       Value<int> id,
+      Value<String> icon,
+      Value<String> title,
       Value<String> content,
       Value<DateTime> createdAt,
-      Value<String?> icon,
-      Value<String?> title,
     });
 
 class $$ThoughtsTableFilterComposer
@@ -384,16 +387,6 @@ class $$ThoughtsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get content => $composableBuilder(
-    column: $table.content,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<String> get icon => $composableBuilder(
     column: $table.icon,
     builder: (column) => ColumnFilters(column),
@@ -401,6 +394,16 @@ class $$ThoughtsTableFilterComposer
 
   ColumnFilters<String> get title => $composableBuilder(
     column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get content => $composableBuilder(
+    column: $table.content,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -419,16 +422,6 @@ class $$ThoughtsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get content => $composableBuilder(
-    column: $table.content,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get icon => $composableBuilder(
     column: $table.icon,
     builder: (column) => ColumnOrderings(column),
@@ -436,6 +429,16 @@ class $$ThoughtsTableOrderingComposer
 
   ColumnOrderings<String> get title => $composableBuilder(
     column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get content => $composableBuilder(
+    column: $table.content,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -452,17 +455,17 @@ class $$ThoughtsTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get content =>
-      $composableBuilder(column: $table.content, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
-
   GeneratedColumn<String> get icon =>
       $composableBuilder(column: $table.icon, builder: (column) => column);
 
   GeneratedColumn<String> get title =>
       $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get content =>
+      $composableBuilder(column: $table.content, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
 }
 
 class $$ThoughtsTableTableManager
@@ -494,30 +497,30 @@ class $$ThoughtsTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
+                Value<String> icon = const Value.absent(),
+                Value<String> title = const Value.absent(),
                 Value<String> content = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
-                Value<String?> icon = const Value.absent(),
-                Value<String?> title = const Value.absent(),
               }) => ThoughtsCompanion(
                 id: id,
-                content: content,
-                createdAt: createdAt,
                 icon: icon,
                 title: title,
+                content: content,
+                createdAt: createdAt,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
+                required String icon,
+                required String title,
                 required String content,
                 Value<DateTime> createdAt = const Value.absent(),
-                Value<String?> icon = const Value.absent(),
-                Value<String?> title = const Value.absent(),
               }) => ThoughtsCompanion.insert(
                 id: id,
-                content: content,
-                createdAt: createdAt,
                 icon: icon,
                 title: title,
+                content: content,
+                createdAt: createdAt,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

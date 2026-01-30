@@ -1,10 +1,8 @@
-import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:things/data/database/app_database.dart';
 
 void main() {
-  // ignore: avoid-late-keyword, just a test
   late AppDatabase database;
 
   setUp(() {
@@ -21,8 +19,8 @@ void main() {
         .insert(
           ThoughtsCompanion.insert(
             content: 'Hello World',
-            title: const Value('My Title'),
-            icon: const Value('🚀'),
+            title: 'My Title',
+            icon: '🚀',
           ),
         );
 
@@ -39,6 +37,8 @@ void main() {
         .insert(
           ThoughtsCompanion.insert(
             content: 'To be deleted',
+            title: 'My Title',
+            icon: '🚀',
           ),
         );
 

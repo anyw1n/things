@@ -13,8 +13,8 @@ class AppDatabase extends _$AppDatabase {
 
 class Thoughts extends Table {
   IntColumn get id => integer().autoIncrement()();
-  TextColumn get content => text()();
+  TextColumn get icon => text().withLength(min: 1)();
+  TextColumn get title => text().withLength(min: 1)();
+  TextColumn get content => text().withLength(min: 1)();
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
-  TextColumn get icon => text().nullable()();
-  TextColumn get title => text().nullable()();
 }

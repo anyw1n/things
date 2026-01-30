@@ -32,10 +32,13 @@ Based on [PRD.md](./PRD.md), this plan outlines the step-by-step development pro
 - **Goal**: Abstract database access from the business logic.
 - **Tasks**:
     1. Create `ThoughtsRepository` interface and implementation.
-    2. Implement methods: `getThoughtsForDate(DateTime)`, `addThought(String content, DateTime date)`, `deleteThought(String id)`.
+    2. Implement methods:
+        - `getThoughtsForDate(DateTime)`
+        - `addThought(String content, String title, String emoji)`: Validate inputs (non-empty content) and handle errors.
+        - `deleteThought(int id)`: Handle errors (e.g., item not found).
 - **Tests**:
-  - [ ] Unit Test: Mock Database, verify Repository calls correct DB methods.
-  - [ ] Unit Test: Verify date transformation logic (if any).
+  - [x] Unit Test: Mock Database, verify Repository calls correct DB methods.
+  - [x] Unit Test: Verify error handling propagates correctly.
 
 ## Phase 2: Business Logic (BLoC)
 
