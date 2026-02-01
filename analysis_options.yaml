@@ -92,6 +92,9 @@ linter:
     - use_truncating_division
 
 dcm:
+  exclude:
+    rules:
+      - "test/**"
   metrics:
     # Function-level
     cyclomatic-complexity: 15
@@ -118,8 +121,6 @@ dcm:
     - avoid-dynamic
     - avoid-global-state
     - avoid-late-keyword:
-        exclude:
-          - test/**
         allow-initialized: true
         ignored-types:
           - AnimationController
@@ -140,8 +141,6 @@ dcm:
     - no-empty-block
     - no-equal-then-else
     - no-magic-number:
-        exclude:
-          - test/**
         allow-only-once: true
         ignore-instances: true
     - prefer-commenting-analyzer-ignores

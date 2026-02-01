@@ -46,7 +46,7 @@ Based on [PRD.md](./PRD.md), this plan outlines the step-by-step development pro
 
 - **Goal**: Manage state for the Daily View.
 - **Tasks**:
-    1. Define Events: `LoadThoughts(DateTime)`, `AddThought(String, DateTime)`, `DeleteThought(String)`.
+    1. Define Events: `LoadThoughts(DateTime)`, `AddThought(String, DateTime)`, `DeleteThought(int)`.
     2. Define States: `ThoughtsLoading`, `ThoughtsLoaded(List<Thought>, DateTime)`, `ThoughtsError`.
     3. Implement `ThoughtsBloc`.
 - **Tests**:
