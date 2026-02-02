@@ -1,3 +1,5 @@
 {
-  "title": "Things"
+  "title": "Things",
+  "addThoughtHint": "Add a thought...",
+  "noThoughts": "No thoughts for this day."
 }

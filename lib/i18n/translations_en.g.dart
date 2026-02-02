@@ -43,6 +43,12 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 
 	/// en: 'Things'
 	String get title => 'Things';
+
+	/// en: 'Add a thought...'
+	String get addThoughtHint => 'Add a thought...';
+
+	/// en: 'No thoughts for this day.'
+	String get noThoughts => 'No thoughts for this day.';
 }
 
 /// The flat map containing all translations for locale <en>.
@@ -54,6 +60,8 @@ extension on Translations {
 	dynamic _flatMapFunction(String path) {
 		return switch (path) {
 			'title' => 'Things',
+			'addThoughtHint' => 'Add a thought...',
+			'noThoughts' => 'No thoughts for this day.',
 			_ => null,
 		};
 	}

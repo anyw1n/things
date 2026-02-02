@@ -50,9 +50,9 @@ Based on [PRD.md](./PRD.md), this plan outlines the step-by-step development pro
     2. Define States: `ThoughtsLoading`, `ThoughtsLoaded(List<Thought>, DateTime)`, `ThoughtsError`.
     3. Implement `ThoughtsBloc`.
 - **Tests**:
-  - [ ] BLoC Test: Emits `ThoughtsLoaded` with empty list when repository returns empty.
-  - [ ] BLoC Test: Emits `ThoughtsLoaded` with new thought after `AddThought` event.
-  - [ ] BLoC Test: Verify date formatting/handling in state.
+  - [x] BLoC Test: Emits `ThoughtsLoaded` with empty list when repository returns empty.
+  - [x] BLoC Test: Emits `ThoughtsLoaded` with new thought after `AddThought` event.
+  - [x] BLoC Test: Verify date formatting/handling in state.
 
 ## Phase 3: UI & Navigation
 
@@ -64,9 +64,9 @@ Based on [PRD.md](./PRD.md), this plan outlines the step-by-step development pro
     2. `ThoughtListWidget`: ListView of thoughts.
     3. `ThoughtInputWidget`: TextField for adding thoughts.
 - **Tests**:
-  - [ ] Widget Test: `DateHeaderWidget` renders correct date format.
-  - [ ] Widget Test: `ThoughtInputWidget` calls callback on submit.
-  - [ ] Widget Test: `ThoughtListWidget` renders list of items provided.
+  - [x] Widget Test: `DateHeaderWidget` renders correct date format.
+  - [x] Widget Test: `ThoughtInputWidget` calls callback on submit.
+  - [x] Widget Test: `ThoughtListWidget` renders list of items provided.
 
 ### Step 6: Daily View Page & Swiping
 
