@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "dart-code.dart-code",
+        "dart-code.flutter",
+        "felixangelov.bloc",
+        "dcmdev.dcm-vscode-extension",
+        "jeroen-meijer.pubspec-assist",
+        "vivaxy.vscode-conventional-commits",
+        "redhat.vscode-yaml"
+    ]
+}

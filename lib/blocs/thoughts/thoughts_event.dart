@@ -1,5 +1,3 @@
-// ignore_for_file: prefer-immutable-bloc-events
-
 import 'package:equatable/equatable.dart';
 
 sealed class ThoughtsEvent extends Equatable {

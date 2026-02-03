@@ -120,13 +120,7 @@ dcm:
     - avoid-duplicate-named-imports
     - avoid-dynamic
     - avoid-global-state
-    - avoid-late-keyword:
-        allow-initialized: true
-        ignored-types:
-          - AnimationController
     - avoid-nested-conditional-expressions
-    - avoid-non-null-assertion:
-        skip-checked-fields: true
     - avoid-redundant-async
     - avoid-self-compare
     - avoid-substring
@@ -136,16 +130,9 @@ dcm:
     - avoid-unnecessary-type-casts
     - avoid-unrelated-type-assertions
     - binary-expression-operand-order
-    # - member-ordering
     - no-boolean-literal-compare
-    - no-empty-block
     - no-equal-then-else
-    - no-magic-number:
-        allow-only-once: true
-        ignore-instances: true
     - prefer-commenting-analyzer-ignores
-    - prefer-conditional-expressions:
-        ignore-nested: true
     - prefer-correct-test-file-name
     - prefer-enums-by-name
     - prefer-first
@@ -167,8 +154,6 @@ dcm:
     - prefer-correct-edge-insets-constructor
     - prefer-define-hero-tag
     - prefer-extracting-callbacks
-    - prefer-single-widget-per-file:
-        ignore-private-widgets: true
     - prefer-text-rich
     - use-setstate-synchronously
     # Bloc
@@ -189,8 +174,6 @@ dcm:
     - prefer-bloc-extensions
     - prefer-bloc-state-suffix
     - prefer-correct-bloc-provider
-    - prefer-immutable-bloc-events
-    - prefer-immutable-bloc-state
     - prefer-multi-bloc-provider
     - prefer-sealed-bloc-events
     - prefer-sealed-bloc-state
