@@ -1,5 +1,14 @@
 {
   "title": "Things",
-  "addThoughtHint": "Add a thought...",
-  "noThoughts": "No thoughts for this day."
+  "dailyScreen": {
+    "addThoughtHint": "Add a thought...",
+    "noThoughts": "No thoughts for this day.",
+    "dateHeaderTitle(context=HeaderDateContext)": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "other": "${date: DateFormat('EEEE')}"
+    },
+    "dateHeaderSubtitle": "${date: DateFormat('MMM d')}",
+    "backToToday": "Back to today"
+  }
 }

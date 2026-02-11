@@ -10,18 +10,17 @@ class ThoughtListWidget extends StatelessWidget {
   });
 
   final List<Thought> thoughts;
-  // final void Function(Thought thought) onDelete;
 
   @Preview()
   static Widget preview() => ThoughtListWidget(
-    thoughts: List.generate(
+    thoughts: .generate(
       15,
       (i) => Thought(
         id: i,
-        icon: String.fromCharCode(i + 0x1F600),
+        icon: .fromCharCode(i + 0x1F600),
         title: 'Title $i',
         content: 'Content $i',
-        createdAt: DateTime.now(),
+        createdAt: .now(),
       ),
     ),
   );
@@ -29,7 +28,9 @@ class ThoughtListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (thoughts.isEmpty) {
-      return Center(child: Text(t.noThoughts));
+      return Center(
+        child: Text(t.dailyScreen.noThoughts),
+      );
     }
 
     return ListView(

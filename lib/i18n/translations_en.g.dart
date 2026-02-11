@@ -44,11 +44,40 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	/// en: 'Things'
 	String get title => 'Things';
 
+	late final TranslationsDailyScreenEn dailyScreen = TranslationsDailyScreenEn.internal(_root);
+}
+
+// Path: dailyScreen
+class TranslationsDailyScreenEn {
+	TranslationsDailyScreenEn.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
 	/// en: 'Add a thought...'
 	String get addThoughtHint => 'Add a thought...';
 
 	/// en: 'No thoughts for this day.'
 	String get noThoughts => 'No thoughts for this day.';
+
+	/// en: '(today) {Today} (yesterday) {Yesterday} (other) {${date: DateFormat('EEEE')}}'
+	String dateHeaderTitle({required HeaderDateContext context, required DateTime date}) {
+		switch (context) {
+			case HeaderDateContext.today:
+				return 'Today';
+			case HeaderDateContext.yesterday:
+				return 'Yesterday';
+			case HeaderDateContext.other:
+				return '${DateFormat('EEEE', 'en').format(date)}';
+		}
+	}
+
+	/// en: '${date: DateFormat('MMM d')}'
+	String dateHeaderSubtitle({required DateTime date}) => '${DateFormat('MMM d', 'en').format(date)}';
+
+	/// en: 'Back to today'
+	String get backToToday => 'Back to today';
 }
 
 /// The flat map containing all translations for locale <en>.
@@ -60,8 +89,11 @@ extension on Translations {
 	dynamic _flatMapFunction(String path) {
 		return switch (path) {
 			'title' => 'Things',
-			'addThoughtHint' => 'Add a thought...',
-			'noThoughts' => 'No thoughts for this day.',
+			'dailyScreen.addThoughtHint' => 'Add a thought...',
+			'dailyScreen.noThoughts' => 'No thoughts for this day.',
+			'dailyScreen.dateHeaderTitle' => ({required HeaderDateContext context, required DateTime date}) { switch (context) { case HeaderDateContext.today: return 'Today'; case HeaderDateContext.yesterday: return 'Yesterday'; case HeaderDateContext.other: return '${DateFormat('EEEE', 'en').format(date)}'; } }, 
+			'dailyScreen.dateHeaderSubtitle' => ({required DateTime date}) => '${DateFormat('MMM d', 'en').format(date)}',
+			'dailyScreen.backToToday' => 'Back to today',
 			_ => null,
 		};
 	}

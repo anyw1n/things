@@ -3,7 +3,10 @@ import 'package:flutter/widget_previews.dart';
 import 'package:things/i18n/translations.g.dart';
 
 class ThoughtInputWidget extends StatefulWidget {
-  const ThoughtInputWidget({required this.onSubmit, super.key});
+  const ThoughtInputWidget({
+    required this.onSubmit,
+    super.key,
+  });
 
   final ValueChanged<String> onSubmit;
 
@@ -15,7 +18,7 @@ class ThoughtInputWidget extends StatefulWidget {
 }
 
 class _ThoughtInputWidgetState extends State<ThoughtInputWidget> {
-  final TextEditingController _controller = TextEditingController();
+  final _controller = TextEditingController();
 
   void _submit() {
     final text = _controller.text.trim();
@@ -33,22 +36,37 @@ class _ThoughtInputWidgetState extends State<ThoughtInputWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: TextField(
-        controller: _controller,
-        decoration: InputDecoration(
-          hintText: t.addThoughtHint,
-          suffixIcon: IconButton(
-            icon: const Icon(Icons.send),
-            onPressed: _submit,
-          ),
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(255)),
+    return TextField(
+      controller: _controller,
+      decoration: .new(
+        hintText: t.dailyScreen.addThoughtHint,
+        suffixIcon: Padding(
+          padding: const EdgeInsetsDirectional.only(end: 4),
+          child: Material(
+            color: Colors.deepPurple,
+            shape: const CircleBorder(),
+            child: IconButton(
+              icon: const Icon(
+                Icons.arrow_upward_rounded,
+                color: Colors.white,
+              ),
+              onPressed: _submit,
+            ),
           ),
         ),
-        onSubmitted: (_) => _submit(),
+        fillColor: Colors.white.withValues(alpha: 0.05),
+        filled: true,
+        border: WidgetStateInputBorder.resolveWith(
+          (states) => OutlineInputBorder(
+            borderSide: const BorderSide(
+              width: 0.5,
+              color: Colors.white10,
+            ),
+            borderRadius: .circular(999),
+          ),
+        ),
       ),
+      onSubmitted: (_) => _submit(),
     );
   }
 }
