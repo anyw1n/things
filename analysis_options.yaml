@@ -41,7 +41,7 @@ linter:
     - directives_ordering
     - document_ignores
     - eol_at_end_of_file
-    - flutter_style_todos
+    # - flutter_style_todos
     - join_return_with_assignment
     - leading_newlines_in_multiline_strings
     - library_names
@@ -139,7 +139,6 @@ dcm:
     - prefer-immediate-return
     - prefer-iterable-of
     - prefer-last
-    - prefer-match-file-name
     - prefer-moving-to-variable
     # Flutter
     - always-remove-listener
@@ -161,7 +160,6 @@ dcm:
     - avoid-bloc-public-methods
     - avoid-cubits
     - avoid-duplicate-bloc-event-handlers
-    - avoid-empty-build-when
     - avoid-existing-instances-in-bloc-provider
     - avoid-instantiating-in-bloc-value-provider
     - avoid-passing-bloc-to-bloc

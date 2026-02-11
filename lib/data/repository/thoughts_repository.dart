@@ -1,8 +1,9 @@
 import 'package:drift/drift.dart';
+import 'package:injectable/injectable.dart';
 import 'package:things/data/database/app_database.dart';
 
 abstract class ThoughtsRepository {
-  Future<List<Thought>> getThoughtsForDate(DateTime date);
+  Stream<List<Thought>> watchThoughtsForDate(DateTime date);
   Future<void> addThought({
     required String icon,
     required String title,
@@ -11,22 +12,23 @@ abstract class ThoughtsRepository {
   Future<void> deleteThought(int id);
 }
 
+@Singleton(as: ThoughtsRepository)
 class ThoughtsRepositoryImpl implements ThoughtsRepository {
   ThoughtsRepositoryImpl(this._db);
 
   final AppDatabase _db;
 
   @override
-  Future<List<Thought>> getThoughtsForDate(DateTime date) {
+  Stream<List<Thought>> watchThoughtsForDate(DateTime date) {
     final startOfDay = DateTime(date.year, date.month, date.day);
-    final endOfDay = startOfDay.add(const Duration(days: 1));
+    final endOfDay = startOfDay.add(const .new(days: 1));
 
     return (_db.select(_db.thoughts)..where(
           (t) =>
               t.createdAt.isBiggerOrEqualValue(startOfDay) &
               t.createdAt.isSmallerThanValue(endOfDay),
         ))
-        .get();
+        .watch();
   }
 
   @override

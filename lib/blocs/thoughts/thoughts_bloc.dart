@@ -1,38 +1,67 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:things/blocs/thoughts/thoughts_event.dart';
-import 'package:things/blocs/thoughts/thoughts_state.dart';
-import 'package:things/data/repository/thoughts_repository.dart';
+import 'dart:async';
 
+import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+import 'package:things/data/database/app_database.dart';
+import 'package:things/data/repository/thoughts_repository.dart';
+import 'package:things/utils.dart';
+
+part 'thoughts_state.dart';
+part 'thoughts_event.dart';
+
+@injectable
 class ThoughtsBloc extends Bloc<ThoughtsEvent, ThoughtsState> {
-  ThoughtsBloc({required ThoughtsRepository repository})
-    : _repository = repository,
-      super(ThoughtsInitial()) {
+  ThoughtsBloc(this._repository) : super(const .new()) {
     on<ThoughtsEvent>(
       (event, emit) => switch (event) {
-        LoadThoughts() => _onLoadThoughts(event, emit),
-        AddThought() => _onAddThought(event, emit),
-        DeleteThought() => _onDeleteThought(event, emit),
+        ThoughtsLoadRequested() => _onThoughtsLoadRequested(event, emit),
+        ThoughtsAddPressed() => _onThoughtsAddPressed(event, emit),
       },
     );
   }
 
   final ThoughtsRepository _repository;
+  final Set<DateTime> _activeStreams = {};
 
-  Future<void> _onLoadThoughts(
-    LoadThoughts event,
+  Future<void> _onThoughtsLoadRequested(
+    ThoughtsLoadRequested event,
     Emitter<ThoughtsState> emit,
   ) async {
-    emit(ThoughtsLoading());
-    try {
-      final thoughts = await _repository.getThoughtsForDate(event.date);
-      emit(ThoughtsLoaded(thoughts: thoughts, date: event.date));
-    } catch (e) {
-      emit(ThoughtsError(e.toString()));
-    }
+    final date = event.date.onlyDate;
+    await [
+      date,
+      date.subtract(const .new(days: 1)),
+      date.add(const .new(days: 1)),
+    ].map((date) => _listenForThoughts(date, emit)).wait;
   }
 
-  Future<void> _onAddThought(
-    AddThought event,
+  Future<void> _listenForThoughts(
+    DateTime date,
+    Emitter<ThoughtsState> emit,
+  ) async {
+    if (!_activeStreams.add(date)) {
+      return;
+    }
+    // print('active streams add: $_activeStreams');
+    emit(state.newStateForDate(date: date, state: const .loadInProgress()));
+    await emit.forEach(
+      _repository.watchThoughtsForDate(date),
+      onData: (thoughts) => state.newStateForDate(
+        date: date,
+        state: .loadSuccess(thoughts: thoughts),
+      ),
+      onError: (e, _) => state.newStateForDate(
+        date: date,
+        state: .loadFailure(message: e.toString()),
+      ),
+    );
+    _activeStreams.remove(date);
+    // print('active streams remove: $_activeStreams');
+  }
+
+  Future<void> _onThoughtsAddPressed(
+    ThoughtsAddPressed event,
     Emitter<ThoughtsState> emit,
   ) async {
     try {
@@ -41,23 +70,19 @@ class ThoughtsBloc extends Bloc<ThoughtsEvent, ThoughtsState> {
         title: event.title,
         content: event.content,
       );
-      add(LoadThoughts(date: DateTime.now()));
     } catch (e) {
-      emit(ThoughtsError(e.toString()));
+      emit(
+        state.newStateForDate(
+          date: .now(),
+          state: .loadFailure(message: e.toString()),
+        ),
+      );
     }
   }
 
-  Future<void> _onDeleteThought(
-    DeleteThought event,
-    Emitter<ThoughtsState> emit,
-  ) async {
-    try {
-      await _repository.deleteThought(event.id);
-      if (state is ThoughtsLoaded) {
-        add(LoadThoughts(date: (state as ThoughtsLoaded).date));
-      }
-    } catch (e) {
-      emit(ThoughtsError(e.toString()));
-    }
-  }
+  // @override
+  // void onTransition(Transition<ThoughtsEvent, ThoughtsState> transition) {
+  //   print(transition);
+  //   super.onTransition(transition);
+  // }
 }

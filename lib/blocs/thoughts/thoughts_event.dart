@@ -1,14 +1,23 @@
-import 'package:equatable/equatable.dart';
+part of 'thoughts_bloc.dart';
 
 sealed class ThoughtsEvent extends Equatable {
   const ThoughtsEvent();
+
+  const factory ThoughtsEvent.loadRequested({required DateTime date}) =
+      ThoughtsLoadRequested;
+
+  const factory ThoughtsEvent.addPressed({
+    required String icon,
+    required String title,
+    required String content,
+  }) = ThoughtsAddPressed;
 
   @override
   List<Object?> get props => [];
 }
 
-final class LoadThoughts extends ThoughtsEvent {
-  const LoadThoughts({required this.date});
+final class ThoughtsLoadRequested extends ThoughtsEvent {
+  const ThoughtsLoadRequested({required this.date});
 
   final DateTime date;
 
@@ -16,8 +25,8 @@ final class LoadThoughts extends ThoughtsEvent {
   List<Object?> get props => [date];
 }
 
-final class AddThought extends ThoughtsEvent {
-  const AddThought({
+final class ThoughtsAddPressed extends ThoughtsEvent {
+  const ThoughtsAddPressed({
     required this.icon,
     required this.title,
     required this.content,
@@ -29,13 +38,4 @@ final class AddThought extends ThoughtsEvent {
 
   @override
   List<Object?> get props => [icon, title, content];
-}
-
-final class DeleteThought extends ThoughtsEvent {
-  const DeleteThought({required this.id});
-
-  final int id;
-
-  @override
-  List<Object?> get props => [id];
 }
