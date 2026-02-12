@@ -2,182 +2,121 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:things/blocs/thoughts/thoughts_bloc.dart';
-import 'package:things/blocs/thoughts/thoughts_event.dart';
-import 'package:things/blocs/thoughts/thoughts_state.dart';
 import 'package:things/data/database/app_database.dart';
 import 'package:things/data/repository/thoughts_repository.dart';
+import 'package:things/utils.dart';
 
 class MockThoughtsRepository extends Mock implements ThoughtsRepository {}
 
 void main() {
   group('ThoughtsBloc', () {
     late ThoughtsRepository repository;
-    final date = DateTime(2023);
+    late ThoughtsBloc bloc;
+
+    final date = DateTime(2024);
+    final prevDate = date.subtract(const .new(days: 1));
+    final nextDate = date.add(const .new(days: 1));
+
+    final thought = Thought(
+      id: 1,
+      icon: '💡',
+      title: 'Idea',
+      content: 'A great idea',
+      createdAt: date,
+    );
 
     setUp(() {
       repository = MockThoughtsRepository();
+      bloc = .new(repository);
     });
 
-    test('initial state is ThoughtsInitial', () {
-      expect(ThoughtsBloc(repository: repository).state, ThoughtsInitial());
+    tearDown(() {
+      bloc.close();
     });
 
-    blocTest<ThoughtsBloc, ThoughtsState>(
-      'emits [ThoughtsLoading, ThoughtsLoaded] when LoadThoughts is added and '
-      'repository returns empty list',
-      build: () {
-        when(
-          () => repository.getThoughtsForDate(date),
-        ).thenAnswer((_) async => const []);
-        return ThoughtsBloc(repository: repository);
-      },
-      act: (bloc) => bloc.add(LoadThoughts(date: date)),
-      expect: () => [
-        ThoughtsLoading(),
-        ThoughtsLoaded(thoughts: const [], date: date),
-      ],
-    );
+    test('initial state is correct', () {
+      expect(bloc.state, const ThoughtsState());
+    });
 
-    blocTest<ThoughtsBloc, ThoughtsState>(
-      'emits [ThoughtsLoading, ThoughtsLoaded] when LoadThoughts is added and '
-      'repository returns thoughts',
-      build: () {
-        final thoughts = [
-          Thought(
-            id: 1,
-            icon: '👋',
-            title: 'Title',
-            content: 'Content',
-            createdAt: date,
-          ),
-        ];
-        when(
-          () => repository.getThoughtsForDate(date),
-        ).thenAnswer((_) async => thoughts);
-        return ThoughtsBloc(repository: repository);
-      },
-      act: (bloc) => bloc.add(LoadThoughts(date: date)),
-      expect: () => [
-        ThoughtsLoading(),
-        ThoughtsLoaded(
-          thoughts: [
-            Thought(
-              id: 1,
-              icon: '👋',
-              title: 'Title',
-              content: 'Content',
-              createdAt: date,
+    group('ThoughtsLoadRequested', () {
+      blocTest<ThoughtsBloc, ThoughtsState>(
+        'subscribes to thoughts for the requested date, previous day, '
+        'and next day',
+        build: () {
+          when(
+            () => repository.watchThoughtsForDate(any()),
+          ).thenAnswer((_) => .value([thought]));
+          return bloc;
+        },
+        act: (bloc) => bloc.add(ThoughtsLoadRequested(date: date)),
+        verify: (_) {
+          verify(
+            () => repository.watchThoughtsForDate(date.onlyDate),
+          ).called(1);
+          verify(
+            () => repository.watchThoughtsForDate(prevDate.onlyDate),
+          ).called(1);
+          verify(
+            () => repository.watchThoughtsForDate(nextDate.onlyDate),
+          ).called(1);
+        },
+      );
+    });
+
+    group('ThoughtsAddPressed', () {
+      const icon = '📝';
+      const title = 'New Note';
+      const content = 'Content';
+
+      blocTest<ThoughtsBloc, ThoughtsState>(
+        'calls repository.addThought',
+        build: () {
+          when(
+            () => repository.addThought(
+              icon: any(named: 'icon'),
+              title: any(named: 'title'),
+              content: any(named: 'content'),
             ),
-          ],
-          date: date,
+          ).thenAnswer((_) async => 1);
+          return bloc;
+        },
+        act: (bloc) => bloc.add(
+          const ThoughtsAddPressed(icon: icon, title: title, content: content),
         ),
-      ],
-    );
-
-    DateTime? addThoughtLoadedDate;
-    blocTest<ThoughtsBloc, ThoughtsState>(
-      'emits [ThoughtsLoading, ThoughtsLoaded] with new thought after '
-      'AddThought event',
-      build: () {
-        final newThought = Thought(
-          id: 2,
-          icon: '📝',
-          title: 'Title',
-          content: 'New Content',
-          createdAt: date,
-        );
-        when(
-          () => repository.addThought(
-            content: 'New Content',
-            title: 'Title',
-            icon: '📝',
-          ),
-        ).thenAnswer((_) async {});
-        when(
-          () => repository.getThoughtsForDate(any()),
-        ).thenAnswer((invocation) async {
-          addThoughtLoadedDate = invocation.positionalArguments[0] as DateTime;
-          return [newThought];
-        });
-        return ThoughtsBloc(repository: repository);
-      },
-      act: (bloc) => bloc.add(
-        const AddThought(
-          icon: '📝',
-          title: 'Title',
-          content: 'New Content',
-        ),
-      ),
-      expect: () => [
-        ThoughtsLoading(),
-        ThoughtsLoaded(
-          thoughts: [
-            Thought(
-              id: 2,
-              icon: '📝',
-              title: 'Title',
-              content: 'New Content',
-              createdAt: date,
+        verify: (_) {
+          verify(
+            () => repository.addThought(
+              icon: icon,
+              title: title,
+              content: content,
             ),
-          ],
-          date: addThoughtLoadedDate!,
-        ),
-      ],
-      verify: (bloc) {
-        verify(
-          () => repository.addThought(
-            content: 'New Content',
-            title: 'Title',
-            icon: '📝',
-          ),
-        ).called(1);
-      },
-    );
+          ).called(1);
+        },
+      );
 
-    blocTest<ThoughtsBloc, ThoughtsState>(
-      'emits [ThoughtsLoading, ThoughtsLoaded] after DeleteThought event',
-      build: () {
-        when(() => repository.deleteThought(1)).thenAnswer((_) async {});
-        when(
-          () => repository.getThoughtsForDate(date),
-        ).thenAnswer((_) async => []);
-        return ThoughtsBloc(repository: repository);
-      },
-      seed: () => ThoughtsLoaded(
-        thoughts: [
-          Thought(
-            id: 1,
-            icon: '👋',
-            title: 'Title',
-            content: 'Content',
-            createdAt: date,
+      blocTest<ThoughtsBloc, ThoughtsState>(
+        'emits failure when adding thought fails',
+        build: () {
+          when(
+            () => repository.addThought(
+              icon: any(named: 'icon'),
+              title: any(named: 'title'),
+              content: any(named: 'content'),
+            ),
+          ).thenThrow(Exception('Failed'));
+          return bloc;
+        },
+        act: (bloc) => bloc.add(
+          const ThoughtsAddPressed(icon: icon, title: title, content: content),
+        ),
+        expect: () => [
+          isA<ThoughtsState>().having(
+            (s) => s.statesByDate.values.whereType<ThoughtsByDateLoadFailure>(),
+            'has failure state',
+            isNotEmpty,
           ),
         ],
-        date: date,
-      ),
-      act: (bloc) => bloc.add(const DeleteThought(id: 1)),
-      expect: () => [
-        ThoughtsLoading(),
-        ThoughtsLoaded(thoughts: const [], date: date),
-      ],
-      verify: (bloc) {
-        verify(() => repository.deleteThought(1)).called(1);
-      },
-    );
-
-    blocTest<ThoughtsBloc, ThoughtsState>(
-      'emits [ThoughtsError] when repository fails',
-      build: () {
-        when(
-          () => repository.getThoughtsForDate(date),
-        ).thenThrow(Exception('Database error'));
-        return ThoughtsBloc(repository: repository);
-      },
-      act: (bloc) => bloc.add(LoadThoughts(date: date)),
-      expect: () => [
-        ThoughtsLoading(),
-        const ThoughtsError('Exception: Database error'),
-      ],
-    );
+      );
+    });
   });
 }

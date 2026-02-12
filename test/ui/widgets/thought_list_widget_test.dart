@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:things/data/database/app_database.dart';
-import 'package:things/i18n/translations.g.dart';
 import 'package:things/ui/widgets/thought_list_widget.dart';
 
 void main() {
-  setUp(() {
-    LocaleSettings.setLocale(AppLocale.en);
-  });
-
   testWidgets('ThoughtListWidget renders list of thoughts', (tester) async {
     final thoughts = [
       Thought(
@@ -16,23 +11,21 @@ void main() {
         icon: '😊',
         title: 'Happy thought',
         content: '',
-        createdAt: DateTime.now(),
+        createdAt: .now(),
       ),
       Thought(
         id: 2,
         icon: '🤔',
         title: 'Pondering',
         content: '',
-        createdAt: DateTime.now(),
+        createdAt: .now(),
       ),
     ];
 
     await tester.pumpWidget(
-      TranslationProvider(
-        child: MaterialApp(
-          home: Scaffold(
-            body: ThoughtListWidget(thoughts: thoughts),
-          ),
+      MaterialApp(
+        home: Scaffold(
+          body: ThoughtListWidget(thoughts: thoughts),
         ),
       ),
     );
@@ -46,11 +39,9 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      TranslationProvider(
-        child: const MaterialApp(
-          home: Scaffold(
-            body: ThoughtListWidget(thoughts: []),
-          ),
+      const MaterialApp(
+        home: Scaffold(
+          body: ThoughtListWidget(thoughts: []),
         ),
       ),
     );
