@@ -4,23 +4,20 @@ import 'package:injectable/injectable.dart';
 
 part 'app_database.g.dart';
 
-@singleton
+@lazySingleton
 @DriftDatabase(tables: [Thoughts])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase([QueryExecutor? e])
+  AppDatabase([@ignoreParam QueryExecutor? e])
     : super(
         e ??
             driftDatabase(
               name: 'app_db',
               web: .new(
-                sqlite3Wasm: Uri.parse('sqlite3.wasm'),
-                driftWorker: Uri.parse('drift_worker.js'),
+                sqlite3Wasm: .parse('sqlite3.wasm'),
+                driftWorker: .parse('drift_worker.js'),
               ),
             ),
       );
-
-  @factoryMethod
-  static AppDatabase create() => .new();
 
   @override
   int get schemaVersion => 1;

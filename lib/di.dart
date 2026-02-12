@@ -4,5 +4,5 @@ import 'package:things/di.config.dart';
 
 final getIt = GetIt.instance;
 
-@InjectableInit()
+@injectableInit
 void configureDependencies() => getIt.init();

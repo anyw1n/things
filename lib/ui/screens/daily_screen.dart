@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:things/blocs/thoughts/thoughts_bloc.dart';
 import 'package:things/di.dart';
 import 'package:things/i18n/translations.g.dart';
-import 'package:things/ui/widgets/date_header_widget.dart';
-import 'package:things/ui/widgets/thought_input_widget.dart';
-import 'package:things/ui/widgets/thought_list_widget.dart';
+import 'package:things/ui/widgets/widgets.dart';
 import 'package:things/utils.dart';
 
 class DailyScreen extends StatelessWidget {
@@ -31,8 +28,6 @@ class _DailyView extends StatefulWidget {
 
 class _DailyViewState extends State<_DailyView> {
   late final PageController _pageController;
-
-  final _inputKey = GlobalKey();
 
   var _today = DateTime.now().onlyDate;
   var _currentPageIndex = 0;

@@ -4,7 +4,7 @@ import 'package:things/data/database/app_database.dart';
 
 abstract class ThoughtsRepository {
   Stream<List<Thought>> watchThoughtsForDate(DateTime date);
-  Future<void> addThought({
+  Future<int> addThought({
     required String icon,
     required String title,
     required String content,
@@ -12,7 +12,7 @@ abstract class ThoughtsRepository {
   Future<void> deleteThought(int id);
 }
 
-@Singleton(as: ThoughtsRepository)
+@LazySingleton(as: ThoughtsRepository)
 class ThoughtsRepositoryImpl implements ThoughtsRepository {
   ThoughtsRepositoryImpl(this._db);
 
@@ -32,7 +32,7 @@ class ThoughtsRepositoryImpl implements ThoughtsRepository {
   }
 
   @override
-  Future<void> addThought({
+  Future<int> addThought({
     required String icon,
     required String title,
     required String content,

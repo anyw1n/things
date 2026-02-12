@@ -22,8 +22,8 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    gh.singleton<_i909.AppDatabase>(() => _i909.AppDatabase.create());
-    gh.singleton<_i554.ThoughtsRepository>(
+    gh.lazySingleton<_i909.AppDatabase>(() => _i909.AppDatabase());
+    gh.lazySingleton<_i554.ThoughtsRepository>(
       () => _i554.ThoughtsRepositoryImpl(gh<_i909.AppDatabase>()),
     );
     gh.factory<_i299.ThoughtsBloc>(
