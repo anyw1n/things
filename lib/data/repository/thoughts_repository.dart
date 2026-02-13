@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
 import 'package:things/data/database/app_database.dart';
 
-abstract class ThoughtsRepository {
+abstract interface class ThoughtsRepository {
   Stream<List<Thought>> watchThoughtsForDate(DateTime date);
   Future<int> addThought({
     required String icon,

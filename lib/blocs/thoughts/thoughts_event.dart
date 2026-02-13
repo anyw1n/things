@@ -6,11 +6,8 @@ sealed class ThoughtsEvent extends Equatable {
   const factory ThoughtsEvent.loadRequested({required DateTime date}) =
       ThoughtsLoadRequested;
 
-  const factory ThoughtsEvent.addPressed({
-    required String icon,
-    required String title,
-    required String content,
-  }) = ThoughtsAddPressed;
+  const factory ThoughtsEvent.addPressed({required String content}) =
+      ThoughtsAddPressed;
 
   @override
   List<Object?> get props => [];
@@ -26,16 +23,10 @@ final class ThoughtsLoadRequested extends ThoughtsEvent {
 }
 
 final class ThoughtsAddPressed extends ThoughtsEvent {
-  const ThoughtsAddPressed({
-    required this.icon,
-    required this.title,
-    required this.content,
-  });
+  const ThoughtsAddPressed({required this.content});
 
-  final String icon;
-  final String title;
   final String content;
 
   @override
-  List<Object?> get props => [icon, title, content];
+  List<Object?> get props => [content];
 }

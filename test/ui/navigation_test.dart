@@ -20,7 +20,7 @@ void main() {
 
     getIt
       ..pushNewScope()
-      ..registerFactory(() => ThoughtsBloc(repository));
+      ..registerFactory(() => ThoughtsBloc(repository, null));
 
     // Pump MainApp
     await tester.pumpWidget(const App());

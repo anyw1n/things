@@ -24,20 +24,11 @@ class App extends StatelessWidget {
               textTheme: const .new(
                 displayMedium: .new(
                   fontSize: 36,
-                  fontVariations: [.weight(800)],
+                  fontWeight: .w800,
                 ),
                 displaySmall: .new(
                   fontSize: 18,
-                  fontVariations: [.weight(500)],
-                ),
-                labelLarge: .new(
-                  fontVariations: [.weight(600)],
-                ),
-                bodyLarge: .new(
-                  fontVariations: [.weight(400)],
-                ),
-                bodyMedium: .new(
-                  fontVariations: [.weight(400)],
+                  fontWeight: .w500,
                 ),
               ),
             ),

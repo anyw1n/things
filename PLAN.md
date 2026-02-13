@@ -76,8 +76,8 @@ Based on [PRD.md](./PRD.md), this plan outlines the step-by-step development pro
     2. Integrate `ThoughtsBloc` with the Page logic (each page might need its own Bloc or a scoped reference).
     3. Implement "Swipe" logic to change the current date in focus.
 - **Tests**:
-  - [ ] Widget Test: Swiping left/right changes the displayed date.
-  - [ ] Widget Test: Verify input field adds thought to the *currently visible* date.
+  - [x] Widget Test: Swiping left/right changes the displayed date.
+  - [x] Widget Test: Verify input field adds thought to the *currently visible* date.
 
 ### Step 7: Navigation & Routing (GoRouter)
 
@@ -86,20 +86,11 @@ Based on [PRD.md](./PRD.md), this plan outlines the step-by-step development pro
     1. Configure `GoRouter` with `HomePage` as the initial route.
     2. Ensure Android Back button works correctly.
 - **Tests**:
-  - [ ] Widget Test: App starts on the Home route.
+  - [x] Widget Test: App starts on the Home route.
 
 ## Phase 4: Polish & Integration
 
-### Step 8: Theming & Visuals
-
-- **Goal**: Apply Dark Theme and fonts.
-- **Tasks**:
-    1. Configure `ThemeData` (Dark mode default).
-    2. Apply `GoogleFonts`.
-- **Tests**:
-  - [ ] Visual/Goldens (Optional): Verify dark theme contrast and appearance.
-
-### Step 9: Final Integration Testing
+### Step 8: Final Integration Testing
 
 - **Goal**: Verify the entire flow works on a device/emulator.
 - **Tasks**:

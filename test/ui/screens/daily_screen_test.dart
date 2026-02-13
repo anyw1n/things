@@ -19,7 +19,7 @@ void main() {
     repository = MockThoughtsRepository();
     getIt
       ..pushNewScope()
-      ..registerFactory(() => ThoughtsBloc(repository));
+      ..registerFactory(() => ThoughtsBloc(repository, null));
   });
 
   tearDown(() async {

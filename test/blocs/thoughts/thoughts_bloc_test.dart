@@ -4,13 +4,17 @@ import 'package:mocktail/mocktail.dart';
 import 'package:things/blocs/thoughts/thoughts_bloc.dart';
 import 'package:things/data/database/app_database.dart';
 import 'package:things/data/repository/thoughts_repository.dart';
+import 'package:things/data/services/ai_service.dart';
 import 'package:things/utils.dart';
 
 class MockThoughtsRepository extends Mock implements ThoughtsRepository {}
 
+class MockAiService extends Mock implements AiService {}
+
 void main() {
   group('ThoughtsBloc', () {
     late ThoughtsRepository repository;
+    late AiService aiService;
     late ThoughtsBloc bloc;
 
     final date = DateTime(2024);
@@ -27,7 +31,8 @@ void main() {
 
     setUp(() {
       repository = MockThoughtsRepository();
-      bloc = .new(repository);
+      aiService = MockAiService();
+      bloc = .new(repository, aiService);
     });
 
     tearDown(() {
@@ -67,10 +72,19 @@ void main() {
       const icon = '📝';
       const title = 'New Note';
       const content = 'Content';
+      const reaction = 'Saved';
+      const ThoughtMetadata metadata = (
+        icon: icon,
+        title: title,
+        reaction: reaction,
+      );
 
       blocTest<ThoughtsBloc, ThoughtsState>(
-        'calls repository.addThought',
+        'calls aiService.generateMetadata and repository.addThought',
         build: () {
+          when(
+            () => aiService.generateMetadata(content),
+          ).thenAnswer((_) async => metadata);
           when(
             () => repository.addThought(
               icon: any(named: 'icon'),
@@ -81,9 +95,10 @@ void main() {
           return bloc;
         },
         act: (bloc) => bloc.add(
-          const ThoughtsAddPressed(icon: icon, title: title, content: content),
+          const ThoughtsAddPressed(content: content),
         ),
         verify: (_) {
+          verify(() => aiService.generateMetadata(content)).called(1);
           verify(
             () => repository.addThought(
               icon: icon,
@@ -98,6 +113,9 @@ void main() {
         'emits failure when adding thought fails',
         build: () {
           when(
+            () => aiService.generateMetadata(content),
+          ).thenAnswer((_) async => metadata);
+          when(
             () => repository.addThought(
               icon: any(named: 'icon'),
               title: any(named: 'title'),
@@ -107,7 +125,7 @@ void main() {
           return bloc;
         },
         act: (bloc) => bloc.add(
-          const ThoughtsAddPressed(icon: icon, title: title, content: content),
+          const ThoughtsAddPressed(content: content),
         ),
         expect: () => [
           isA<ThoughtsState>().having(

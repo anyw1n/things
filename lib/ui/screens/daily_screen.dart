@@ -20,7 +20,7 @@ class DailyScreen extends StatelessWidget {
 }
 
 class _DailyView extends StatefulWidget {
-  const _DailyView({super.key});
+  const _DailyView();
 
   @override
   State<_DailyView> createState() => _DailyViewState();
@@ -40,13 +40,8 @@ class _DailyViewState extends State<_DailyView> {
     );
   }
 
-  void _onThoughtSubmit(String content) => context.read<ThoughtsBloc>().add(
-    .addPressed(
-      icon: '📝',
-      title: 'Note',
-      content: content,
-    ),
-  );
+  void _onThoughtSubmit(String content) =>
+      context.read<ThoughtsBloc>().add(.addPressed(content: content));
 
   void _onBackToToday() {
     _today = .now().onlyDate;

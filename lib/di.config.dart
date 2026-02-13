@@ -14,6 +14,7 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:things/blocs/thoughts/thoughts_bloc.dart' as _i299;
 import 'package:things/data/database/app_database.dart' as _i909;
 import 'package:things/data/repository/thoughts_repository.dart' as _i554;
+import 'package:things/data/services/ai_service.dart' as _i680;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -23,11 +24,15 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.lazySingleton<_i909.AppDatabase>(() => _i909.AppDatabase());
+    gh.lazySingleton<_i680.AiService>(() => const _i680.FirebaseAiService());
     gh.lazySingleton<_i554.ThoughtsRepository>(
       () => _i554.ThoughtsRepositoryImpl(gh<_i909.AppDatabase>()),
     );
     gh.factory<_i299.ThoughtsBloc>(
-      () => _i299.ThoughtsBloc(gh<_i554.ThoughtsRepository>()),
+      () => _i299.ThoughtsBloc(
+        gh<_i554.ThoughtsRepository>(),
+        gh<_i680.AiService>(),
+      ),
     );
     return this;
   }
