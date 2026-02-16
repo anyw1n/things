@@ -11,6 +11,8 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ThoughtInputWidget(
+              enabled: true,
+              isLoading: false,
               onSubmit: (text) => submittedText = text,
             ),
           ),
@@ -31,7 +33,11 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: ThoughtInputWidget(onSubmit: (_) => called = true),
+            body: ThoughtInputWidget(
+              enabled: true,
+              isLoading: false,
+              onSubmit: (_) => called = true,
+            ),
           ),
         ),
       );
