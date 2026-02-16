@@ -78,6 +78,9 @@ class TranslationsDailyScreenEn {
 
 	/// en: 'Back to today'
 	String get backToToday => 'Back to today';
+
+	/// en: 'Saved'
+	String get saved => 'Saved';
 }
 
 /// The flat map containing all translations for locale <en>.
@@ -94,6 +97,7 @@ extension on Translations {
 			'dailyScreen.dateHeaderTitle' => ({required HeaderDateContext context, required DateTime date}) { switch (context) { case HeaderDateContext.today: return 'Today'; case HeaderDateContext.yesterday: return 'Yesterday'; case HeaderDateContext.other: return '${DateFormat('EEEE', 'en').format(date)}'; } }, 
 			'dailyScreen.dateHeaderSubtitle' => ({required DateTime date}) => '${DateFormat('MMM d', 'en').format(date)}',
 			'dailyScreen.backToToday' => 'Back to today',
+			'dailyScreen.saved' => 'Saved',
 			_ => null,
 		};
 	}

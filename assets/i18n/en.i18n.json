@@ -9,6 +9,7 @@
       "other": "${date: DateFormat('EEEE')}"
     },
     "dateHeaderSubtitle": "${date: DateFormat('MMM d')}",
-    "backToToday": "Back to today"
+    "backToToday": "Back to today",
+    "saved": "Saved"
   }
 }

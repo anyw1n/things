@@ -5,13 +5,31 @@ import 'package:things/i18n/translations.g.dart';
 class ThoughtInputWidget extends StatefulWidget {
   const ThoughtInputWidget({
     required this.onSubmit,
+    required this.enabled,
+    required this.isLoading,
     super.key,
   });
 
   final ValueChanged<String> onSubmit;
+  final bool enabled;
+  final bool isLoading;
 
   @Preview()
-  static Widget preview() => ThoughtInputWidget(onSubmit: (_) {});
+  static Widget preview() => Column(
+    spacing: 16,
+    children: [
+      ThoughtInputWidget(
+        onSubmit: (_) {},
+        enabled: true,
+        isLoading: false,
+      ),
+      ThoughtInputWidget(
+        onSubmit: (_) {},
+        enabled: false,
+        isLoading: true,
+      ),
+    ],
+  );
 
   @override
   State<ThoughtInputWidget> createState() => _ThoughtInputWidgetState();
@@ -37,6 +55,7 @@ class _ThoughtInputWidgetState extends State<ThoughtInputWidget> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      enabled: widget.enabled,
       controller: _controller,
       decoration: .new(
         hintText: t.dailyScreen.addThoughtHint,
@@ -45,12 +64,30 @@ class _ThoughtInputWidgetState extends State<ThoughtInputWidget> {
           child: Material(
             color: Colors.deepPurple,
             shape: const CircleBorder(),
-            child: IconButton(
-              icon: const Icon(
-                Icons.arrow_upward_rounded,
-                color: Colors.white,
+            child: AnimatedCrossFade(
+              crossFadeState: widget.isLoading ? .showFirst : .showSecond,
+              duration: const .new(milliseconds: 300),
+              firstChild: const SizedBox.square(
+                dimension: 26,
+                child: CircularProgressIndicator(
+                  strokeWidth: 3,
+                  color: Colors.white,
+                ),
               ),
-              onPressed: _submit,
+              secondChild: IconButton(
+                icon: const Icon(
+                  Icons.arrow_upward_rounded,
+                  color: Colors.white,
+                ),
+                onPressed: _submit,
+              ),
+              layoutBuilder: (top, topKey, bottom, bottomKey) => Stack(
+                alignment: .center,
+                children: [
+                  Positioned(key: bottomKey, child: bottom),
+                  Positioned(key: topKey, child: top),
+                ],
+              ),
             ),
           ),
         ),
@@ -58,7 +95,7 @@ class _ThoughtInputWidgetState extends State<ThoughtInputWidget> {
         filled: true,
         border: WidgetStateInputBorder.resolveWith(
           (states) => OutlineInputBorder(
-            borderSide: const BorderSide(
+            borderSide: const .new(
               width: 0.5,
               color: Colors.white10,
             ),
