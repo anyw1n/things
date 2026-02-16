@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:things/i18n/translations.g.dart';
-import 'package:things/router/app_router.dart';
+import 'package:things/app/theme.dart';
+import 'package:things/core/i18n/translations.g.dart';
+import 'package:things/core/router/app_router.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -16,22 +17,7 @@ class App extends StatelessWidget {
             locale: TranslationProvider.of(context).flutterLocale,
             supportedLocales: AppLocaleUtils.supportedLocales,
             localizationsDelegates: GlobalMaterialLocalizations.delegates,
-            theme: .new(
-              useMaterial3: true,
-              brightness: .dark,
-              colorSchemeSeed: Colors.deepPurple,
-              fontFamily: 'Manrope',
-              textTheme: const .new(
-                displayMedium: .new(
-                  fontSize: 36,
-                  fontWeight: .w800,
-                ),
-                displaySmall: .new(
-                  fontSize: 18,
-                  fontWeight: .w500,
-                ),
-              ),
-            ),
+            theme: appTheme,
           );
         },
       ),

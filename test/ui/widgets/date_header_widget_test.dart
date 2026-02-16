@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:things/ui/widgets/date_header_widget.dart';
+import 'package:things/features/daily_thoughts/ui/widgets/date_header_widget.dart';
 
 void main() {
   setUp(initializeDateFormatting);

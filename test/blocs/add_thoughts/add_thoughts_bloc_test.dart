@@ -1,9 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:things/blocs/add_thoughts/add_thoughts_bloc.dart';
-import 'package:things/data/repository/thoughts_repository.dart';
-import 'package:things/data/services/ai_service.dart';
+import 'package:things/core/repository/thoughts_repository.dart';
+import 'package:things/core/services/ai_service.dart';
+import 'package:things/features/daily_thoughts/bloc/add_thoughts/add_thoughts_bloc.dart';
 
 class MockThoughtsRepository extends Mock implements ThoughtsRepository {}
 

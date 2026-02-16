@@ -183,7 +183,7 @@ class _AnimatedTopSnackBarState extends State<AnimatedTopSnackBar>
       child: Material(
         color:
             widget.type.backgroundColor ??
-            Theme.of(context).colorScheme.surfaceContainer,
+            ColorScheme.of(context).surfaceContainer,
         shape: RoundedRectangleBorder(
           borderRadius: .circular(24),
         ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:things/blocs/add_thoughts/add_thoughts_bloc.dart';
-import 'package:things/blocs/day_thoughts/day_thoughts_bloc.dart';
-import 'package:things/di.dart';
-import 'package:things/i18n/translations.g.dart';
-import 'package:things/ui/widgets/widgets.dart';
-import 'package:things/utils.dart';
+import 'package:things/core/di/di.dart';
+import 'package:things/core/i18n/translations.g.dart';
+import 'package:things/core/utils/utils.dart';
+import 'package:things/features/daily_thoughts/bloc/add_thoughts/add_thoughts_bloc.dart';
+import 'package:things/features/daily_thoughts/bloc/day_thoughts/day_thoughts_bloc.dart';
+import 'package:things/features/daily_thoughts/ui/widgets/widgets.dart';
 
 class DailyScreen extends StatefulWidget {
   const DailyScreen({super.key});

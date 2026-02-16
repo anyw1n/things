@@ -5,8 +5,8 @@ import 'package:characters/characters.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:things/data/repository/thoughts_repository.dart';
-import 'package:things/data/services/ai_service.dart';
+import 'package:things/core/repository/thoughts_repository.dart';
+import 'package:things/core/services/ai_service.dart';
 
 part 'add_thoughts_event.dart';
 part 'add_thoughts_state.dart';

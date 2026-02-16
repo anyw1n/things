@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:things/ui/screens/screens.dart';
+import 'package:things/features/daily_thoughts/ui/daily_screen.dart';
 
 part 'app_router.g.dart';
 

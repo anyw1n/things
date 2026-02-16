@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widget_previews.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:things/i18n/translations.g.dart';
-import 'package:things/utils.dart';
+import 'package:things/core/i18n/translations.g.dart';
+import 'package:things/core/utils/utils.dart';
 
 class DateHeaderWidget extends StatelessWidget {
   const DateHeaderWidget({required this.date, super.key});
@@ -20,7 +20,7 @@ class DateHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final daysDiff = DateTime.now().onlyDate.difference(date.onlyDate).inDays;
-    final textTheme = Theme.of(context).textTheme;
+    final textTheme = TextTheme.of(context);
     return Padding(
       padding: const .all(16),
       child: Text.rich(

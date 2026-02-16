@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
-import 'package:things/di.dart' as di;
+import 'package:things/core/di/di.dart' as di;
+import 'package:things/core/i18n/translations.g.dart';
 import 'package:things/firebase_options.dart';
-import 'package:things/i18n/translations.g.dart';
 
 Future<void> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
