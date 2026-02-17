@@ -59,27 +59,6 @@ class _DailyScreenState extends State<DailyScreen> {
     AnimatedTopSnackBar.show(context: context, message: text, type: type);
   }
 
-  Widget _bottomWidgetLayoutBuilder(
-    Widget topChild,
-    Key topChildKey,
-    Widget bottomChild,
-    Key bottomChildKey,
-  ) {
-    final expandSecond =
-        (topChildKey as ValueKey<CrossFadeState>).value == .showSecond;
-    return Stack(
-      children: expandSecond
-          ? [
-              Positioned(key: bottomChildKey, child: bottomChild),
-              Positioned.fill(key: topChildKey, child: topChild),
-            ]
-          : [
-              Positioned.fill(key: bottomChildKey, child: bottomChild),
-              Positioned(key: topChildKey, child: topChild),
-            ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,6 +83,7 @@ class _DailyScreenState extends State<DailyScreen> {
                     ? .showFirst
                     : .showSecond,
                 duration: const .new(milliseconds: 200),
+                alignment: .bottomCenter,
                 firstChild: BlocProvider(
                   create: (context) => getIt<AddThoughtsBloc>(),
                   child: BlocConsumer<AddThoughtsBloc, AddThoughtsState>(
@@ -124,13 +104,29 @@ class _DailyScreenState extends State<DailyScreen> {
                     },
                   ),
                 ),
-                secondChild: ElevatedButton.icon(
-                  onPressed: _onBackToToday,
-                  iconAlignment: .end,
-                  label: Text(t.dailyScreen.backToToday),
-                  icon: const Icon(Icons.arrow_forward),
+                secondChild: SizedBox(
+                  width: .infinity,
+                  height: 56,
+                  child: ElevatedButton.icon(
+                    onPressed: _onBackToToday,
+                    iconAlignment: .end,
+                    label: Text(t.dailyScreen.backToToday),
+                    icon: const Icon(Icons.arrow_forward),
+                  ),
                 ),
-                layoutBuilder: _bottomWidgetLayoutBuilder,
+                layoutBuilder: (top, topKey, bottom, bottomKey) => Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Positioned(
+                      key: bottomKey,
+                      left: 0,
+                      bottom: 0,
+                      right: 0,
+                      child: bottom,
+                    ),
+                    Positioned(key: topKey, child: top),
+                  ],
+                ),
               ),
             ),
           ],

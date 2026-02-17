@@ -54,56 +54,97 @@ class _ThoughtInputWidgetState extends State<ThoughtInputWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      enabled: widget.enabled,
-      controller: _controller,
-      decoration: .new(
-        hintText: t.dailyScreen.addThoughtHint,
-        suffixIcon: Padding(
-          padding: const EdgeInsetsDirectional.only(end: 4),
-          child: Material(
-            color: Colors.deepPurple,
-            shape: const CircleBorder(),
-            child: AnimatedCrossFade(
-              crossFadeState: widget.isLoading ? .showFirst : .showSecond,
-              duration: const .new(milliseconds: 300),
-              firstChild: const SizedBox.square(
-                dimension: 26,
-                child: CircularProgressIndicator(
-                  strokeWidth: 3,
-                  color: Colors.white,
-                ),
-              ),
-              secondChild: IconButton(
-                icon: const Icon(
-                  Icons.arrow_upward_rounded,
-                  color: Colors.white,
-                ),
-                onPressed: _submit,
-              ),
-              layoutBuilder: (top, topKey, bottom, bottomKey) => Stack(
-                alignment: .center,
-                children: [
-                  Positioned(key: bottomKey, child: bottom),
-                  Positioned(key: topKey, child: top),
-                ],
-              ),
-            ),
-          ),
+    return ConstrainedBox(
+      constraints: const .new(minHeight: 56),
+      child: Material(
+        color: ColorScheme.of(context).surfaceContainer,
+        shape: RoundedRectangleBorder(
+          side: const .new(width: 0.5, color: Colors.white24),
+          borderRadius: .circular(28),
         ),
-        fillColor: Colors.white.withValues(alpha: 0.05),
-        filled: true,
-        border: WidgetStateInputBorder.resolveWith(
-          (states) => OutlineInputBorder(
-            borderSide: const .new(
-              width: 0.5,
-              color: Colors.white10,
-            ),
-            borderRadius: .circular(999),
+        child: Padding(
+          padding: const EdgeInsets.all(4).copyWith(left: 16),
+          child: Row(
+            crossAxisAlignment: .end,
+            spacing: 8,
+            children: [
+              Expanded(
+                child: AnimatedSize(
+                  alignment: .bottomCenter,
+                  duration: const .new(milliseconds: 200),
+                  child: TextField(
+                    enabled: widget.enabled,
+                    controller: _controller,
+                    textCapitalization: .sentences,
+                    minLines: 1,
+                    maxLines: 12,
+                    decoration: .new(
+                      hintText: t.dailyScreen.addThoughtHint,
+                      border: .none,
+                    ),
+                    onSubmitted: (_) => _submit(),
+                    onTapUpOutside: (_) =>
+                        FocusManager.instance.primaryFocus?.unfocus(),
+                  ),
+                ),
+              ),
+              _SendButton(
+                onPressed: _submit,
+                enabled: widget.enabled,
+                isLoading: widget.isLoading,
+              ),
+            ],
           ),
         ),
       ),
-      onSubmitted: (_) => _submit(),
+    );
+  }
+}
+
+class _SendButton extends StatelessWidget {
+  const _SendButton({
+    required this.onPressed,
+    required this.enabled,
+    required this.isLoading,
+  });
+
+  final void Function() onPressed;
+  final bool enabled;
+  final bool isLoading;
+
+  static const _iconSize = 24.0;
+  static const _iconPadding = EdgeInsets.all(12);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: enabled
+          ? Colors.deepPurple
+          : ColorScheme.of(context).secondaryContainer,
+      animateColor: true,
+      shape: const CircleBorder(),
+      child: AnimatedCrossFade(
+        crossFadeState: isLoading ? .showFirst : .showSecond,
+        duration: const .new(milliseconds: 300),
+        firstChild: const Padding(
+          padding: _iconPadding,
+          child: SizedBox.square(
+            dimension: _iconSize,
+            child: CircularProgressIndicator(
+              strokeWidth: 3,
+              strokeCap: .round,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        secondChild: IconButton(
+          iconSize: _iconSize,
+          padding: _iconPadding,
+          color: Colors.white,
+          onPressed: enabled ? onPressed : null,
+          icon: const Icon(Icons.arrow_upward_rounded),
+        ),
+      ),
     );
   }
 }
