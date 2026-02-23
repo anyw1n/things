@@ -4,3 +4,4 @@ extensions:
   - drift: true
   - provider: true
   - get_it: true
+  - flame: true

@@ -81,6 +81,9 @@ class TranslationsDailyScreenEn {
 
 	/// en: 'Saved'
 	String get saved => 'Saved';
+
+	/// en: 'Switch view'
+	String get switchView => 'Switch view';
 }
 
 /// The flat map containing all translations for locale <en>.
@@ -98,6 +101,7 @@ extension on Translations {
 			'dailyScreen.dateHeaderSubtitle' => ({required DateTime date}) => '${DateFormat('MMM d', 'en').format(date)}',
 			'dailyScreen.backToToday' => 'Back to today',
 			'dailyScreen.saved' => 'Saved',
+			'dailyScreen.switchView' => 'Switch view',
 			_ => null,
 		};
 	}

@@ -77,14 +77,12 @@ class _ThoughtInputWidgetState extends State<ThoughtInputWidget> {
                     controller: _controller,
                     textCapitalization: .sentences,
                     minLines: 1,
-                    maxLines: 12,
+                    maxLines: 6,
                     decoration: .new(
                       hintText: t.dailyScreen.addThoughtHint,
                       border: .none,
                     ),
                     onSubmitted: (_) => _submit(),
-                    onTapUpOutside: (_) =>
-                        FocusManager.instance.primaryFocus?.unfocus(),
                   ),
                 ),
               ),

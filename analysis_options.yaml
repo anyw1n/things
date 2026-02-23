@@ -137,7 +137,6 @@ dcm:
     - prefer-immediate-return
     - prefer-iterable-of
     - prefer-last
-    - prefer-moving-to-variable
     # Flutter
     - always-remove-listener
     - avoid-expanded-as-spacer

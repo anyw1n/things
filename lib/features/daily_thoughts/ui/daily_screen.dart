@@ -7,6 +7,14 @@ import 'package:things/features/daily_thoughts/bloc/add_thoughts/add_thoughts_bl
 import 'package:things/features/daily_thoughts/bloc/day_thoughts/day_thoughts_bloc.dart';
 import 'package:things/features/daily_thoughts/ui/widgets/widgets.dart';
 
+enum _View {
+  list,
+  bubbles
+  ;
+
+  _View next() => values[(index + 1) % values.length];
+}
+
 class DailyScreen extends StatefulWidget {
   const DailyScreen({super.key});
 
@@ -19,6 +27,7 @@ class _DailyScreenState extends State<DailyScreen> {
 
   var _today = DateTime.now().onlyDate;
   var _currentPageIndex = 0;
+  var _view = _View.bubbles;
 
   bool get _todaySynchronized => _today == .now().onlyDate;
 
@@ -73,6 +82,9 @@ class _DailyScreenState extends State<DailyScreen> {
                 allowImplicitScrolling: true,
                 itemBuilder: (context, index) => _DayPage(
                   date: _today.subtract(.new(days: index)),
+                  view: _view,
+                  onSwitchView: () => setState(() => _view = _view.next()),
+                  isActive: index == _currentPageIndex,
                 ),
               ),
             ),
@@ -137,9 +149,17 @@ class _DailyScreenState extends State<DailyScreen> {
 }
 
 class _DayPage extends StatelessWidget {
-  const _DayPage({required this.date});
+  const _DayPage({
+    required this.date,
+    required this.view,
+    required this.onSwitchView,
+    required this.isActive,
+  });
 
   final DateTime date;
+  final _View view;
+  final void Function() onSwitchView;
+  final bool isActive;
 
   @override
   Widget build(BuildContext context) {
@@ -152,17 +172,35 @@ class _DayPage extends StatelessWidget {
             DayThoughtsInitial() || DayThoughtsLoadInProgress() => const Center(
               child: CircularProgressIndicator(),
             ),
-            DayThoughtsStateLoadSuccess(:final thoughts) => ThoughtListWidget(
-              thoughts: thoughts,
-            ),
+            DayThoughtsStateLoadSuccess(:final thoughts) => switch (view) {
+              .list => ThoughtListWidget(thoughts: thoughts),
+              .bubbles => Padding(
+                padding: const .symmetric(horizontal: 16),
+                child: ThoughtBubblesWidget(
+                  thoughts: thoughts,
+                  isActive: isActive,
+                ),
+              ),
+            },
             DayThoughtsLoadFailure(:final message) => Center(
               child: Text('Error: $message'),
             ),
           };
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              DateHeaderWidget(date: date),
+              Row(
+                mainAxisAlignment: .spaceBetween,
+                children: [
+                  DateHeaderWidget(date: date),
+                  Padding(
+                    padding: const .all(16),
+                    child: TextButton(
+                      onPressed: onSwitchView,
+                      child: Text(t.dailyScreen.switchView),
+                    ),
+                  ),
+                ],
+              ),
               Expanded(child: child),
             ],
           );

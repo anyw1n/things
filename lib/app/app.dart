@@ -12,12 +12,15 @@ class App extends StatelessWidget {
     return TranslationProvider(
       child: Builder(
         builder: (context) {
-          return MaterialApp.router(
-            routerConfig: appRouter,
-            locale: TranslationProvider.of(context).flutterLocale,
-            supportedLocales: AppLocaleUtils.supportedLocales,
-            localizationsDelegates: GlobalMaterialLocalizations.delegates,
-            theme: appTheme,
+          return GestureDetector(
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: MaterialApp.router(
+              routerConfig: appRouter,
+              locale: TranslationProvider.of(context).flutterLocale,
+              supportedLocales: AppLocaleUtils.supportedLocales,
+              localizationsDelegates: GlobalMaterialLocalizations.delegates,
+              theme: appTheme,
+            ),
           );
         },
       ),
