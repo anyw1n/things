@@ -45,6 +45,10 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	String get title => 'Things';
 
 	late final TranslationsDailyScreenEn dailyScreen = TranslationsDailyScreenEn.internal(_root);
+	late final TranslationsThoughtDetailsScreenEn thoughtDetailsScreen = TranslationsThoughtDetailsScreenEn.internal(_root);
+
+	/// en: 'Back'
+	String get back => 'Back';
 }
 
 // Path: dailyScreen
@@ -86,6 +90,21 @@ class TranslationsDailyScreenEn {
 	String get switchView => 'Switch view';
 }
 
+// Path: thoughtDetailsScreen
+class TranslationsThoughtDetailsScreenEn {
+	TranslationsThoughtDetailsScreenEn.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Thought not found'
+	String get thoughtNotFound => 'Thought not found';
+
+	/// en: '${date: DateFormat('MMM d, HH:mm')}'
+	String dateCreated({required DateTime date}) => '${DateFormat('MMM d, HH:mm', 'en').format(date)}';
+}
+
 /// The flat map containing all translations for locale <en>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -102,6 +121,9 @@ extension on Translations {
 			'dailyScreen.backToToday' => 'Back to today',
 			'dailyScreen.saved' => 'Saved',
 			'dailyScreen.switchView' => 'Switch view',
+			'thoughtDetailsScreen.thoughtNotFound' => 'Thought not found',
+			'thoughtDetailsScreen.dateCreated' => ({required DateTime date}) => '${DateFormat('MMM d, HH:mm', 'en').format(date)}',
+			'back' => 'Back',
 			_ => null,
 		};
 	}

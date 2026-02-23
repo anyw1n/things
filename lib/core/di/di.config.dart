@@ -15,9 +15,11 @@ import 'package:things/core/database/app_database.dart' as _i517;
 import 'package:things/core/repository/thoughts_repository.dart' as _i348;
 import 'package:things/core/services/ai_service.dart' as _i990;
 import 'package:things/features/daily_thoughts/bloc/add_thoughts/add_thoughts_bloc.dart'
-    as _i194;
+    as _i359;
 import 'package:things/features/daily_thoughts/bloc/day_thoughts/day_thoughts_bloc.dart'
-    as _i361;
+    as _i595;
+import 'package:things/features/daily_thoughts/bloc/thought_details/thought_details_bloc.dart'
+    as _i483;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -31,11 +33,15 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i348.ThoughtsRepositoryImpl(gh<_i517.AppDatabase>()),
     );
     gh.lazySingleton<_i990.AiService>(() => const _i990.FirebaseAiService());
-    gh.factoryParam<_i361.DayThoughtsBloc, DateTime, dynamic>(
-      (date, _) => _i361.DayThoughtsBloc(date, gh<_i348.ThoughtsRepository>()),
+    gh.factoryParam<_i483.ThoughtDetailsBloc, int, dynamic>(
+      (_thoughtId, _) =>
+          _i483.ThoughtDetailsBloc(_thoughtId, gh<_i348.ThoughtsRepository>()),
     );
-    gh.factory<_i194.AddThoughtsBloc>(
-      () => _i194.AddThoughtsBloc(
+    gh.factoryParam<_i595.DayThoughtsBloc, DateTime, dynamic>(
+      (date, _) => _i595.DayThoughtsBloc(date, gh<_i348.ThoughtsRepository>()),
+    );
+    gh.factory<_i359.AddThoughtsBloc>(
+      () => _i359.AddThoughtsBloc(
         gh<_i348.ThoughtsRepository>(),
         gh<_i990.AiService>(),
       ),

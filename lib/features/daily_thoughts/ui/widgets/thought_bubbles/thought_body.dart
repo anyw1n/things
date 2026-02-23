@@ -1,11 +1,12 @@
 part of 'thought_bubbles_widget.dart';
 
-class _ThoughtBody extends BodyComponent with DragCallbacks {
+class _ThoughtBody extends BodyComponent with DragCallbacks, TapCallbacks {
   _ThoughtBody({
     required this.thought,
     required double initialRadius,
     required this.initialPosition,
     required this.groundBody,
+    required this.onTap,
   }) : _radius = initialRadius,
        super(
          paint: .new()
@@ -18,6 +19,7 @@ class _ThoughtBody extends BodyComponent with DragCallbacks {
 
   final Vector2 initialPosition;
   final Body groundBody;
+  final void Function(int id) onTap;
 
   Thought thought;
 
@@ -139,6 +141,9 @@ class _ThoughtBody extends BodyComponent with DragCallbacks {
     super.onDragEnd(event);
     _removeJoint();
   }
+
+  @override
+  void onTapUp(TapUpEvent event) => onTap(thought.id);
 
   @override
   void onRemove() {

@@ -9,10 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart' as sensors;
 import 'package:things/core/database/app_database.dart';
 import 'package:things/core/i18n/translations.g.dart';
+import 'package:things/core/router/app_router.dart';
 
-part 'thought_bubbles_game.dart';
 part 'screen_boundaries.dart';
 part 'thought_body.dart';
+part 'thought_bubbles_game.dart';
 
 class ThoughtBubblesWidget extends StatefulWidget {
   const ThoughtBubblesWidget({
@@ -29,11 +30,25 @@ class ThoughtBubblesWidget extends StatefulWidget {
 }
 
 class _ThoughtBubblesWidgetState extends State<ThoughtBubblesWidget> {
-  final _game = _ThoughtBubblesGame();
+  late final _ThoughtBubblesGame _game;
 
   @override
   void initState() {
     super.initState();
+    _game = _ThoughtBubblesGame(
+      onThoughtTap: (id) async {
+        final wasPaused = _game.paused;
+        if (!wasPaused) {
+          _game.pauseEngine();
+        }
+
+        await ThoughtDetailsRoute(id: id).push<void>(context);
+
+        if (mounted && !wasPaused && widget.isActive && _game.paused) {
+          _game.resumeEngine();
+        }
+      },
+    );
     _game.updateThoughts(widget.thoughts);
     if (!widget.isActive && !_game.paused) {
       _game.pauseEngine();

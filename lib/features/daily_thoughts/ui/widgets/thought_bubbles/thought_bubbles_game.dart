@@ -1,7 +1,10 @@
 part of 'thought_bubbles_widget.dart';
 
 class _ThoughtBubblesGame extends Forge2DGame {
-  _ThoughtBubblesGame() : super(gravity: .new(0, _defaultGravity));
+  _ThoughtBubblesGame({required this.onThoughtTap})
+    : super(gravity: .new(0, _defaultGravity));
+
+  final void Function(int id) onThoughtTap;
 
   List<Thought> _pendingThoughts = [];
 
@@ -156,6 +159,7 @@ class _ThoughtBubblesGame extends Forge2DGame {
         initialRadius: radius,
         initialPosition: _randomPosition,
         groundBody: _groundBody,
+        onTap: onThoughtTap,
       ),
     );
     world.addAll(bodies);

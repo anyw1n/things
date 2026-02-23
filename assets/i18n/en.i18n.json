@@ -12,5 +12,10 @@
     "backToToday": "Back to today",
     "saved": "Saved",
     "switchView": "Switch view"
-  }
+  },
+  "thoughtDetailsScreen": {
+    "thoughtNotFound": "Thought not found",
+    "dateCreated": "${date: DateFormat('MMM d, HH:mm')}"
+  },
+  "back": "Back"
 }

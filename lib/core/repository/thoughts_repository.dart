@@ -4,6 +4,7 @@ import 'package:things/core/database/app_database.dart';
 
 abstract interface class ThoughtsRepository {
   Stream<List<Thought>> watchThoughtsForDate(DateTime date);
+  Future<Thought?> getThoughtById(int id);
   Future<int> addThought({
     required String icon,
     required String title,
@@ -30,6 +31,11 @@ class ThoughtsRepositoryImpl implements ThoughtsRepository {
         ))
         .watch();
   }
+
+  @override
+  Future<Thought?> getThoughtById(int id) => (_db.select(
+    _db.thoughts,
+  )..where((t) => t.id.equals(id))).getSingleOrNull();
 
   @override
   Future<int> addThought({

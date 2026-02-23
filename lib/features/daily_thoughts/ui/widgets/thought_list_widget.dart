@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widget_previews.dart';
 import 'package:things/core/database/app_database.dart';
 import 'package:things/core/i18n/translations.g.dart';
+import 'package:things/core/router/app_router.dart';
 
 class ThoughtListWidget extends StatelessWidget {
   const ThoughtListWidget({
@@ -39,6 +40,7 @@ class ThoughtListWidget extends StatelessWidget {
           ListTile(
             leading: Text(thought.icon),
             title: Text(thought.title),
+            onTap: () => ThoughtDetailsRoute(id: thought.id).go(context),
           ),
       ],
     );

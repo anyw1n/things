@@ -18,7 +18,7 @@ class DayThoughtsBloc extends Bloc<DayThoughtsEvent, DayThoughtsState> {
       super(const .initial()) {
     on<DayThoughtsEvent>(
       (event, emit) => switch (event) {
-        DayThoughtsLoadRequested() => _onLoadRequested(event, emit),
+        DayThoughtsLoadRequested() => _onLoadRequested(emit),
       },
       transformer: droppable(),
     );
@@ -27,10 +27,7 @@ class DayThoughtsBloc extends Bloc<DayThoughtsEvent, DayThoughtsState> {
   final ThoughtsRepository _repository;
   final DateTime _date;
 
-  Future<void> _onLoadRequested(
-    DayThoughtsLoadRequested event,
-    Emitter<DayThoughtsState> emit,
-  ) async {
+  Future<void> _onLoadRequested(Emitter<DayThoughtsState> emit) async {
     emit(const .loadInProgress());
     await emit.forEach(
       _repository.watchThoughtsForDate(_date),
