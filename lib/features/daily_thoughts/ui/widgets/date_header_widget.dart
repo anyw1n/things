@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widget_previews.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:things/core/i18n/translations.g.dart';
-import 'package:things/core/utils/utils.dart';
+import 'package:thoughts/core/i18n/translations.g.dart';
+import 'package:thoughts/core/utils/utils.dart';
 
 class DateHeaderWidget extends StatelessWidget {
   const DateHeaderWidget({required this.date, super.key});

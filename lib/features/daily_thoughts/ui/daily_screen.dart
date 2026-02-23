@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:things/core/di/di.dart';
-import 'package:things/core/i18n/translations.g.dart';
-import 'package:things/core/utils/utils.dart';
-import 'package:things/features/daily_thoughts/bloc/add_thoughts/add_thoughts_bloc.dart';
-import 'package:things/features/daily_thoughts/bloc/day_thoughts/day_thoughts_bloc.dart';
-import 'package:things/features/daily_thoughts/ui/widgets/widgets.dart';
+import 'package:thoughts/core/di/di.dart';
+import 'package:thoughts/core/i18n/translations.g.dart';
+import 'package:thoughts/core/utils/utils.dart';
+import 'package:thoughts/features/daily_thoughts/bloc/add_thoughts/add_thoughts_bloc.dart';
+import 'package:thoughts/features/daily_thoughts/bloc/day_thoughts/day_thoughts_bloc.dart';
+import 'package:thoughts/features/daily_thoughts/ui/widgets/widgets.dart';
 
 enum _View {
   list,

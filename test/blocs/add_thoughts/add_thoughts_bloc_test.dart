@@ -1,9 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:things/core/repository/thoughts_repository.dart';
-import 'package:things/core/services/ai_service.dart';
-import 'package:things/features/daily_thoughts/bloc/add_thoughts/add_thoughts_bloc.dart';
+import 'package:thoughts/core/repository/thoughts_repository.dart';
+import 'package:thoughts/core/services/ai_service.dart';
+import 'package:thoughts/features/daily_thoughts/bloc/add_thoughts/add_thoughts_bloc.dart';
 
 class MockThoughtsRepository extends Mock implements ThoughtsRepository {}
 
@@ -34,7 +34,7 @@ void main() {
       const icon = '📝';
       const title = 'New thought';
       const reaction = 'Saved!';
-      
+
       const ThoughtMetadata metadata = (
         icon: icon,
         title: title,
@@ -44,8 +44,9 @@ void main() {
       blocTest<AddThoughtsBloc, AddThoughtsState>(
         'calls aiService.generateMetadata and repository.addThought on success',
         build: () {
-          when(() => aiService.generateMetadata(any()))
-              .thenAnswer((_) async => metadata);
+          when(
+            () => aiService.generateMetadata(any()),
+          ).thenAnswer((_) async => metadata);
           when(
             () => repository.addThought(
               icon: any(named: 'icon'),
@@ -75,8 +76,9 @@ void main() {
       blocTest<AddThoughtsBloc, AddThoughtsState>(
         'uses fallback metadata when AI service fails',
         build: () {
-          when(() => aiService.generateMetadata(any()))
-              .thenAnswer((_) => .error(Exception('AI Error')));
+          when(
+            () => aiService.generateMetadata(any()),
+          ).thenAnswer((_) => .error(Exception('AI Error')));
           when(
             () => repository.addThought(
               icon: any(named: 'icon'),
@@ -88,7 +90,7 @@ void main() {
         },
         act: (bloc) => bloc.add(const .addRequested(content: content)),
         verify: (_) {
-           verify(
+          verify(
             () => repository.addThought(
               icon: any(named: 'icon'),
               title: any(named: 'title'),
@@ -105,8 +107,9 @@ void main() {
       blocTest<AddThoughtsBloc, AddThoughtsState>(
         'emits failure when repository fails',
         build: () {
-          when(() => aiService.generateMetadata(any()))
-              .thenAnswer((_) async => metadata);
+          when(
+            () => aiService.generateMetadata(any()),
+          ).thenAnswer((_) async => metadata);
           when(
             () => repository.addThought(
               icon: any(named: 'icon'),

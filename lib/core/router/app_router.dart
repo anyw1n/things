@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:things/features/daily_thoughts/ui/daily_screen.dart';
-import 'package:things/features/daily_thoughts/ui/thought_details_screen.dart';
+import 'package:thoughts/features/daily_thoughts/ui/daily_screen.dart';
+import 'package:thoughts/features/daily_thoughts/ui/thought_details_screen.dart';
 
 part 'app_router.g.dart';
 

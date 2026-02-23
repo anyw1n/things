@@ -1,6 +1,6 @@
 {
-    "name": "things",
-    "short_name": "things",
+    "name": "thoughts",
+    "short_name": "thoughts",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

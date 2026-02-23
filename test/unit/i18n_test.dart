@@ -1,12 +1,12 @@
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:things/core/i18n/translations.g.dart';
+import 'package:thoughts/core/i18n/translations.g.dart';
 
 void main() {
   group('i18n', () {
     test('English translations load correctly', () {
       LocaleSettings.setLocale(AppLocale.en);
-      expect(t.title, 'Things');
+      expect(t.title, 'Thoughts');
     });
 
     test('All locales should be supported by Flutter', () {

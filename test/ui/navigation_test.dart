@@ -1,14 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:things/app/app.dart';
-import 'package:things/core/database/app_database.dart';
-import 'package:things/core/di/di.dart';
-import 'package:things/core/repository/thoughts_repository.dart';
-import 'package:things/features/daily_thoughts/bloc/add_thoughts/add_thoughts_bloc.dart';
-import 'package:things/features/daily_thoughts/bloc/day_thoughts/day_thoughts_bloc.dart';
-import 'package:things/features/daily_thoughts/bloc/thought_details/thought_details_bloc.dart';
-import 'package:things/features/daily_thoughts/ui/daily_screen.dart';
-import 'package:things/features/daily_thoughts/ui/thought_details_screen.dart';
+import 'package:thoughts/app/app.dart';
+import 'package:thoughts/core/database/app_database.dart';
+import 'package:thoughts/core/di/di.dart';
+import 'package:thoughts/core/repository/thoughts_repository.dart';
+import 'package:thoughts/features/daily_thoughts/bloc/add_thoughts/add_thoughts_bloc.dart';
+import 'package:thoughts/features/daily_thoughts/bloc/day_thoughts/day_thoughts_bloc.dart';
+import 'package:thoughts/features/daily_thoughts/bloc/thought_details/thought_details_bloc.dart';
+import 'package:thoughts/features/daily_thoughts/ui/daily_screen.dart';
+import 'package:thoughts/features/daily_thoughts/ui/thought_details_screen.dart';
 
 class MockThoughtsRepository extends Mock implements ThoughtsRepository {}
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:things/core/database/app_database.dart';
-import 'package:things/features/daily_thoughts/ui/widgets/thought_list_widget.dart';
+import 'package:thoughts/core/database/app_database.dart';
+import 'package:thoughts/features/daily_thoughts/ui/widgets/thought_list_widget.dart';
 
 void main() {
   testWidgets('ThoughtListWidget renders list of thoughts', (tester) async {

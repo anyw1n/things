@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
-import 'package:things/core/database/app_database.dart';
+import 'package:thoughts/core/database/app_database.dart';
 
 abstract interface class ThoughtsRepository {
   Stream<List<Thought>> watchThoughtsForDate(DateTime date);

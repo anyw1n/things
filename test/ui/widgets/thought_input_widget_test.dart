@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:things/features/daily_thoughts/ui/widgets/thought_input_widget.dart';
+import 'package:thoughts/features/daily_thoughts/ui/widgets/thought_input_widget.dart';
 
 void main() {
   testWidgets(

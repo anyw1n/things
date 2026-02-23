@@ -11,14 +11,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
-import 'package:things/core/database/app_database.dart' as _i517;
-import 'package:things/core/repository/thoughts_repository.dart' as _i348;
-import 'package:things/core/services/ai_service.dart' as _i990;
-import 'package:things/features/daily_thoughts/bloc/add_thoughts/add_thoughts_bloc.dart'
+import 'package:thoughts/core/database/app_database.dart' as _i517;
+import 'package:thoughts/core/repository/thoughts_repository.dart' as _i348;
+import 'package:thoughts/core/services/ai_service.dart' as _i990;
+import 'package:thoughts/features/daily_thoughts/bloc/add_thoughts/add_thoughts_bloc.dart'
     as _i359;
-import 'package:things/features/daily_thoughts/bloc/day_thoughts/day_thoughts_bloc.dart'
+import 'package:thoughts/features/daily_thoughts/bloc/day_thoughts/day_thoughts_bloc.dart'
     as _i595;
-import 'package:things/features/daily_thoughts/bloc/thought_details/thought_details_bloc.dart'
+import 'package:thoughts/features/daily_thoughts/bloc/thought_details/thought_details_bloc.dart'
     as _i483;
 
 extension GetItInjectableX on _i174.GetIt {

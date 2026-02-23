@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widget_previews.dart';
-import 'package:things/core/database/app_database.dart';
-import 'package:things/core/i18n/translations.g.dart';
-import 'package:things/core/router/app_router.dart';
+import 'package:thoughts/core/database/app_database.dart';
+import 'package:thoughts/core/i18n/translations.g.dart';
+import 'package:thoughts/core/router/app_router.dart';
 
 class ThoughtListWidget extends StatelessWidget {
   const ThoughtListWidget({

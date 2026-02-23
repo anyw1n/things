@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:things/core/database/app_database.dart';
-import 'package:things/core/di/di.dart';
-import 'package:things/core/i18n/translations.g.dart';
-import 'package:things/features/daily_thoughts/bloc/thought_details/thought_details_bloc.dart';
+import 'package:thoughts/core/database/app_database.dart';
+import 'package:thoughts/core/di/di.dart';
+import 'package:thoughts/core/i18n/translations.g.dart';
+import 'package:thoughts/features/daily_thoughts/bloc/thought_details/thought_details_bloc.dart';
 
 class ThoughtDetailsScreen extends StatelessWidget {
   const ThoughtDetailsScreen({

@@ -1,4 +1,4 @@
-package com.example.things
+package a.zhizhensky.thoughts
 
 import io.flutter.embedding.android.FlutterActivity
 

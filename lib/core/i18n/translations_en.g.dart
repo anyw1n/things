@@ -41,8 +41,8 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 
 	// Translations
 
-	/// en: 'Things'
-	String get title => 'Things';
+	/// en: 'Thoughts'
+	String get title => 'Thoughts';
 
 	late final TranslationsDailyScreenEn dailyScreen = TranslationsDailyScreenEn.internal(_root);
 	late final TranslationsThoughtDetailsScreenEn thoughtDetailsScreen = TranslationsThoughtDetailsScreenEn.internal(_root);
@@ -113,7 +113,7 @@ class TranslationsThoughtDetailsScreenEn {
 extension on Translations {
 	dynamic _flatMapFunction(String path) {
 		return switch (path) {
-			'title' => 'Things',
+			'title' => 'Thoughts',
 			'dailyScreen.addThoughtHint' => 'Add a thought...',
 			'dailyScreen.noThoughts' => 'No thoughts for this day.',
 			'dailyScreen.dateHeaderTitle' => ({required HeaderDateContext context, required DateTime date}) { switch (context) { case HeaderDateContext.today: return 'Today'; case HeaderDateContext.yesterday: return 'Yesterday'; case HeaderDateContext.other: return '${DateFormat('EEEE', 'en').format(date)}'; } }, 

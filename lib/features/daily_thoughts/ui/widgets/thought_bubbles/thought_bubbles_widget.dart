@@ -7,9 +7,9 @@ import 'package:flame/game.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart' as sensors;
-import 'package:things/core/database/app_database.dart';
-import 'package:things/core/i18n/translations.g.dart';
-import 'package:things/core/router/app_router.dart';
+import 'package:thoughts/core/database/app_database.dart';
+import 'package:thoughts/core/i18n/translations.g.dart';
+import 'package:thoughts/core/router/app_router.dart';
 
 part 'screen_boundaries.dart';
 part 'thought_body.dart';

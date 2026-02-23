@@ -1,3 +1,3 @@
-# things
+# thoughts
 
 A new Flutter project.

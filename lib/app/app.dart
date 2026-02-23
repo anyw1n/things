@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:things/app/theme.dart';
-import 'package:things/core/i18n/translations.g.dart';
-import 'package:things/core/router/app_router.dart';
+import 'package:thoughts/app/theme.dart';
+import 'package:thoughts/core/i18n/translations.g.dart';
+import 'package:thoughts/core/router/app_router.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
