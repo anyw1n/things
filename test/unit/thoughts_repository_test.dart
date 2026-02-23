@@ -93,5 +93,25 @@ void main() {
         throwsA(isA<Exception>()),
       );
     });
+
+    test('getThoughtById returns thought when it exists', () async {
+      final id = await repository.addThought(
+        icon: '🔎',
+        title: 'Lookup',
+        content: 'Find me',
+      );
+
+      final thought = await repository.getThoughtById(id);
+
+      expect(thought, isNotNull);
+      expect(thought!.id, id);
+      expect(thought.title, 'Lookup');
+      expect(thought.content, 'Find me');
+    });
+
+    test('getThoughtById returns null when thought does not exist', () async {
+      final thought = await repository.getThoughtById(999);
+      expect(thought, isNull);
+    });
   });
 }
