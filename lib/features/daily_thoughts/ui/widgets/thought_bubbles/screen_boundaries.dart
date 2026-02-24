@@ -1,5 +1,6 @@
 part of 'thought_bubbles_widget.dart';
 
+/// Invisible looped chain that keeps bubbles inside visible world bounds.
 class _ScreenBoundaries extends BodyComponent {
   static const _friction = 0.3;
 
@@ -11,6 +12,7 @@ class _ScreenBoundaries extends BodyComponent {
     return world.createBody(.new(position: .zero()));
   }
 
+  /// Rebuilds a single boundary fixture to match current camera viewport.
   void _updateBoundaries() {
     final shape = ChainShape()
       ..createLoop(camera.visibleWorldRect.toVertices());

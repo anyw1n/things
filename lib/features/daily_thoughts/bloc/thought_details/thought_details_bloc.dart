@@ -8,6 +8,7 @@ import 'package:thoughts/core/repository/thoughts_repository.dart';
 part 'thought_details_event.dart';
 part 'thought_details_state.dart';
 
+/// Loads a single thought by id for the details screen.
 @injectable
 class ThoughtDetailsBloc
     extends Bloc<ThoughtDetailsEvent, ThoughtDetailsState> {
@@ -24,6 +25,9 @@ class ThoughtDetailsBloc
   final int _thoughtId;
   final ThoughtsRepository _repository;
 
+  /// Retrieves the thought and emits `notFound` when the record is missing.
+  ///
+  /// `droppable` prevents concurrent lookups for the same bloc instance.
   Future<void> _onLoadRequested(Emitter<ThoughtDetailsState> emit) async {
     emit(const .loadInProgress());
     try {

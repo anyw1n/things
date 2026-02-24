@@ -2,20 +2,29 @@ import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
 import 'package:thoughts/core/database/app_database.dart';
 
+/// Repository contract for reading and mutating persisted thoughts.
 abstract interface class ThoughtsRepository {
+  /// Watches thoughts created during the calendar day of [date].
   Stream<List<Thought>> watchThoughtsForDate(DateTime date);
+
+  /// Returns a thought by [id], or `null` when no record exists.
   Future<Thought?> getThoughtById(int id);
+
+  /// Persists a new thought and returns the inserted row id.
   Future<int> addThought({
     required String icon,
     required String title,
     required String content,
   });
+
+  /// Deletes a thought by [id].
   Future<void> deleteThought(int id);
 }
 
+/// Drift-backed implementation of [ThoughtsRepository].
 @LazySingleton(as: ThoughtsRepository)
-class ThoughtsRepositoryImpl implements ThoughtsRepository {
-  ThoughtsRepositoryImpl(this._db);
+class DriftThoughtsRepository implements ThoughtsRepository {
+  DriftThoughtsRepository(this._db);
 
   final AppDatabase _db;
 

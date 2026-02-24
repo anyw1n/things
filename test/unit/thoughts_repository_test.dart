@@ -9,7 +9,7 @@ void main() {
 
   setUp(() {
     db = .new(NativeDatabase.memory());
-    repository = ThoughtsRepositoryImpl(db);
+    repository = DriftThoughtsRepository(db);
   });
 
   tearDown(() async {

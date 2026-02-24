@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widget_previews.dart';
 
+/// Visual variants available for [AnimatedTopSnackBar].
 enum AnimatedTopSnackBarType {
   info(),
   error(backgroundColor: Color(0xFFB71C1C))
@@ -10,9 +11,11 @@ enum AnimatedTopSnackBarType {
 
   const AnimatedTopSnackBarType({this.backgroundColor});
 
+  /// Optional custom background color for this variant.
   final Color? backgroundColor;
 }
 
+/// Floating top snack bar with fade-in and typewriter text animation.
 class AnimatedTopSnackBar extends StatefulWidget {
   const AnimatedTopSnackBar({
     required this.message,
@@ -25,14 +28,28 @@ class AnimatedTopSnackBar extends StatefulWidget {
     super.key,
   });
 
+  /// Message rendered with the typewriter animation.
   final String message;
+
+  /// Visual style variant.
   final AnimatedTopSnackBarType type;
+
+  /// Duration for fade-in/fade-out opacity animation.
   final Duration opacityAnimationDuration;
+
+  /// Interval used to reveal the next character.
   final Duration typingAnimationSpeed;
+
+  /// Time to keep the snackbar visible before dismissing.
   final Duration showDuration;
+
+  /// Text alignment inside the snackbar.
   final TextAlign textAlign;
+
+  /// Callback called after the snackbar is fully dismissed.
   final VoidCallback onDismissed;
 
+  /// Inserts an overlay entry and removes it when the animation completes.
   static void show({
     required BuildContext context,
     required String message,
@@ -145,6 +162,7 @@ class _AnimatedTopSnackBarState extends State<AnimatedTopSnackBar>
     _controller.forward().then((_) => _startTyping());
   }
 
+  /// Reveals text one grapheme at a time to support composed characters.
   void _startTyping() {
     if (_charsDisplayed == _chars.length) {
       _startDismissTimer();
@@ -162,6 +180,7 @@ class _AnimatedTopSnackBarState extends State<AnimatedTopSnackBar>
     });
   }
 
+  /// Starts a delayed fade-out and invokes dismissal callback afterwards.
   void _startDismissTimer() {
     _dismissTimer = .new(widget.showDuration, () {
       _controller.reverse().then((_) => widget.onDismissed());

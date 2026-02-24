@@ -5,6 +5,7 @@ import 'package:thoughts/core/di/di.dart' as di;
 import 'package:thoughts/core/i18n/translations.g.dart';
 import 'package:thoughts/firebase_options.dart';
 
+/// Initializes platform bindings, dependency injection, locale, and Firebase.
 Future<void> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
   di.configureDependencies();

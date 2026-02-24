@@ -3,18 +3,23 @@ import 'dart:convert';
 import 'package:firebase_ai/firebase_ai.dart';
 import 'package:injectable/injectable.dart';
 
+/// AI-generated metadata used to decorate and summarize a thought.
 typedef ThoughtMetadata = ({String icon, String title, String? reaction});
 
+/// Service contract for turning free text into thought metadata.
 abstract interface class AiService {
+  /// Generates icon, title, and optional reaction for the provided [content].
   Future<ThoughtMetadata> generateMetadata(String content);
 }
 
+/// Firebase AI implementation backed by a Gemini model.
 @LazySingleton(as: AiService)
 class FirebaseAiService implements AiService {
   const FirebaseAiService();
 
   static const _modelName = 'gemini-2.5-flash-lite';
 
+  /// Requests a strict JSON response and decodes it into [ThoughtMetadata].
   @override
   Future<ThoughtMetadata> generateMetadata(String content) async {
     final model = FirebaseAI.googleAI().generativeModel(

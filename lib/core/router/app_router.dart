@@ -5,8 +5,10 @@ import 'package:thoughts/features/daily_thoughts/ui/thought_details_screen.dart'
 
 part 'app_router.g.dart';
 
+/// Application router with typed route definitions.
 final appRouter = GoRouter(routes: $appRoutes);
 
+/// Root route that renders the daily thoughts screen.
 @immutable
 @TypedGoRoute<DailyRoute>(
   path: '/',
@@ -22,10 +24,12 @@ class DailyRoute extends GoRouteData with $DailyRoute {
       const DailyScreen();
 }
 
+/// Route for displaying details of a single thought by id.
 @immutable
 class ThoughtDetailsRoute extends GoRouteData with $ThoughtDetailsRoute {
   const ThoughtDetailsRoute({required this.id});
 
+  /// Thought identifier resolved from the route path.
   final int id;
 
   @override

@@ -23,10 +23,20 @@ class AppDatabase extends _$AppDatabase {
   int get schemaVersion => 1;
 }
 
+/// Table storing user thoughts.
 class Thoughts extends Table {
+  /// Auto-incremented thought id.
   IntColumn get id => integer().autoIncrement()();
+
+  /// Emoji representing the thought.
   TextColumn get icon => text().withLength(min: 1)();
+
+  /// Short title.
   TextColumn get title => text().withLength(min: 1)();
+
+  /// Full thought body.
   TextColumn get content => text().withLength(min: 1)();
+
+  /// Date when thought was created.
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 }

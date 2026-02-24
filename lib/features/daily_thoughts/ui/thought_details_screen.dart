@@ -6,12 +6,14 @@ import 'package:thoughts/core/di/di.dart';
 import 'package:thoughts/core/i18n/translations.g.dart';
 import 'package:thoughts/features/daily_thoughts/bloc/thought_details/thought_details_bloc.dart';
 
+/// Screen that loads and renders a single thought by [thoughtId].
 class ThoughtDetailsScreen extends StatelessWidget {
   const ThoughtDetailsScreen({
     required this.thoughtId,
     super.key,
   });
 
+  /// Identifier of the thought to fetch from persistence.
   final int thoughtId;
 
   @override

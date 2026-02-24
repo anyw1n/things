@@ -11,6 +11,7 @@ import 'package:thoughts/core/utils/utils.dart';
 part 'day_thoughts_event.dart';
 part 'day_thoughts_state.dart';
 
+/// Streams thought list updates for a specific calendar day.
 @injectable
 class DayThoughtsBloc extends Bloc<DayThoughtsEvent, DayThoughtsState> {
   DayThoughtsBloc(@factoryParam DateTime date, this._repository)
@@ -27,6 +28,10 @@ class DayThoughtsBloc extends Bloc<DayThoughtsEvent, DayThoughtsState> {
   final ThoughtsRepository _repository;
   final DateTime _date;
 
+  /// Starts observing repository updates and maps them to UI-friendly states.
+  ///
+  /// The handler uses `droppable` to ignore overlapping load requests and keep
+  /// a single active subscription per bloc instance.
   Future<void> _onLoadRequested(Emitter<DayThoughtsState> emit) async {
     emit(const .loadInProgress());
     await emit.forEach(

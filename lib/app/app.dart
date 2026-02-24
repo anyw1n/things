@@ -4,6 +4,7 @@ import 'package:thoughts/app/theme.dart';
 import 'package:thoughts/core/i18n/translations.g.dart';
 import 'package:thoughts/core/router/app_router.dart';
 
+/// Root widget of the app.
 class App extends StatelessWidget {
   const App({super.key});
 

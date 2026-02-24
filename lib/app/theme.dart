@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
+/// Global Material theme used by the application.
 final appTheme = ThemeData(
   useMaterial3: true,
-  brightness: Brightness.dark,
+  brightness: .dark,
   colorSchemeSeed: Colors.deepPurple,
   fontFamily: 'Manrope',
-  textTheme: const TextTheme(
-    displayMedium: TextStyle(
+  textTheme: const .new(
+    displayMedium: .new(
       fontSize: 36,
-      fontWeight: FontWeight.w800,
+      fontWeight: .w800,
     ),
-    displaySmall: TextStyle(
+    displaySmall: .new(
       fontSize: 18,
-      fontWeight: FontWeight.w500,
+      fontWeight: .w500,
     ),
   ),
 );

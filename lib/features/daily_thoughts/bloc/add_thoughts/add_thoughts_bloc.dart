@@ -11,6 +11,7 @@ import 'package:thoughts/core/services/ai_service.dart';
 part 'add_thoughts_event.dart';
 part 'add_thoughts_state.dart';
 
+/// Handles thought creation flow including optional AI metadata generation.
 @injectable
 class AddThoughtsBloc extends Bloc<AddThoughtsEvent, AddThoughtsState> {
   AddThoughtsBloc(this._repository, this._aiService) : super(const .initial()) {
@@ -24,6 +25,10 @@ class AddThoughtsBloc extends Bloc<AddThoughtsEvent, AddThoughtsState> {
   final ThoughtsRepository _repository;
   final AiService? _aiService;
 
+  /// Persists the thought and emits progress/success/failure transitions.
+  ///
+  /// If AI metadata generation fails or is unavailable, this method falls back
+  /// to deterministic local metadata to keep the UX responsive.
   Future<void> _onAddRequested(
     AddThoughtsAddRequested event,
     Emitter<AddThoughtsState> emit,
@@ -51,6 +56,7 @@ class AddThoughtsBloc extends Bloc<AddThoughtsEvent, AddThoughtsState> {
     }
   }
 
+  /// Creates local metadata when the AI service cannot return a valid result.
   ThoughtMetadata _getFallbackMetadata(String content) {
     final emojis = ['📝', '💭', '💡', '✨', '📌', '🗓️', '✅'];
     return (

@@ -15,6 +15,7 @@ part 'screen_boundaries.dart';
 part 'thought_body.dart';
 part 'thought_bubbles_game.dart';
 
+/// Physics-based thought visualization rendered as draggable bubbles.
 class ThoughtBubblesWidget extends StatefulWidget {
   const ThoughtBubblesWidget({
     required this.thoughts,
@@ -22,7 +23,10 @@ class ThoughtBubblesWidget extends StatefulWidget {
     super.key,
   });
 
+  /// Thoughts currently represented by bubbles.
   final List<Thought> thoughts;
+
+  /// Whether simulation updates are active for the current page.
   final bool isActive;
 
   @override
@@ -32,24 +36,24 @@ class ThoughtBubblesWidget extends StatefulWidget {
 class _ThoughtBubblesWidgetState extends State<ThoughtBubblesWidget> {
   late final _ThoughtBubblesGame _game;
 
+  void _onThoughtTap(int thoughtId) async {
+    final wasPaused = _game.paused;
+    if (!wasPaused) {
+      _game.pauseEngine();
+    }
+
+    await ThoughtDetailsRoute(id: thoughtId).push<void>(context);
+
+    if (mounted && !wasPaused && widget.isActive && _game.paused) {
+      _game.resumeEngine();
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    _game = _ThoughtBubblesGame(
-      onThoughtTap: (id) async {
-        final wasPaused = _game.paused;
-        if (!wasPaused) {
-          _game.pauseEngine();
-        }
-
-        await ThoughtDetailsRoute(id: id).push<void>(context);
-
-        if (mounted && !wasPaused && widget.isActive && _game.paused) {
-          _game.resumeEngine();
-        }
-      },
-    );
-    _game.updateThoughts(widget.thoughts);
+    _game = _ThoughtBubblesGame(onThoughtTap: _onThoughtTap)
+      ..updateThoughts(widget.thoughts);
     if (!widget.isActive && !_game.paused) {
       _game.pauseEngine();
     }

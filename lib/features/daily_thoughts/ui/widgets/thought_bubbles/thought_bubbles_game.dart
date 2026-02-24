@@ -6,15 +6,20 @@ class _ThoughtBubblesGame extends Forge2DGame {
 
   final void Function(int id) onThoughtTap;
 
+  /// Thoughts that will be added on game load.
   List<Thought> _pendingThoughts = [];
 
+  /// Static body used as anchor for drags.
   late Body _groundBody;
 
   StreamSubscription<sensors.AccelerometerEvent>? _accelSub;
   StreamSubscription<sensors.UserAccelerometerEvent>? _userAccelSub;
 
+  /// Max occupied area with circles * multiplier to always leave free space / pi.
   static const _areaMultiplier = 0.907 * 0.7 / math.pi;
   static const _maxCircleRadius = 4.5;
+
+  /// Specifies the radius difference for re-rendering.
   static const _radiusUpdateThreshold = 0.01;
 
   static const _baseGravity = 9.8;
@@ -26,6 +31,8 @@ class _ThoughtBubblesGame extends Forge2DGame {
 
   static final _random = math.Random();
 
+  /// Computes a shared bubble radius that keeps occupied area visually
+  /// balanced.
   double _calculateCircleRadius(Rect rect, int circlesNumber) {
     if (circlesNumber <= 0) return _maxCircleRadius;
     return math.min(
@@ -34,6 +41,7 @@ class _ThoughtBubblesGame extends Forge2DGame {
     );
   }
 
+  /// Returns a random spawn point in the currently visible world rect.
   Vector2 get _randomPosition {
     final Rect(:left, :top, :width, :height) = camera.visibleWorldRect;
     return .new(
@@ -59,6 +67,7 @@ class _ThoughtBubblesGame extends Forge2DGame {
     }
   }
 
+  /// Binds device sensors to gravity updates and shake gesture detection.
   void _startSensorListeners() {
     _accelSub = sensors.accelerometerEventStream().listen((event) {
       world.gravity = .new(-event.x * _gravityScale, event.y * _gravityScale);
@@ -73,6 +82,7 @@ class _ThoughtBubblesGame extends Forge2DGame {
     });
   }
 
+  /// Applies random impulses to all bubbles to create a shake effect.
   void _onShake() {
     for (final bodyComponent in world.children.whereType<_ThoughtBody>()) {
       bodyComponent.body.applyLinearImpulse(
@@ -93,9 +103,11 @@ class _ThoughtBubblesGame extends Forge2DGame {
     super.onRemove();
   }
 
+  /// Checks the radius difference for re-rendering.
   bool _radiiExceedThreshold(double a, double b) =>
       (a - b).abs() > _radiusUpdateThreshold;
 
+  /// Resizes all circles after viewport changes to preserve density.
   void _resizeCirclesIfNeeded() {
     final bodies = world.children.whereType<_ThoughtBody>();
     if (bodies.isEmpty) return;
@@ -117,6 +129,7 @@ class _ThoughtBubblesGame extends Forge2DGame {
     _resizeCirclesIfNeeded();
   }
 
+  /// Applies thought updates immediately or stores them until game is loaded.
   void updateThoughts(List<Thought> newThoughts) {
     if (!isLoaded) {
       _pendingThoughts = newThoughts;
@@ -125,6 +138,7 @@ class _ThoughtBubblesGame extends Forge2DGame {
     _updateThoughts(newThoughts);
   }
 
+  /// Reconciles existing bodies with new data by id and updates only diffs.
   void _updateThoughts(List<Thought> newThoughts) {
     final existingBodies = world.children.whereType<_ThoughtBody>().toList();
     final newThoughtsMap = {for (final t in newThoughts) t.id: t};

@@ -1,5 +1,6 @@
 part of 'thought_bubbles_widget.dart';
 
+/// Physics body representing a single thought as a draggable bubble.
 class _ThoughtBody extends BodyComponent with DragCallbacks, TapCallbacks {
   _ThoughtBody({
     required this.thought,
@@ -25,6 +26,8 @@ class _ThoughtBody extends BodyComponent with DragCallbacks, TapCallbacks {
 
   double _radius;
   double get radius => _radius;
+
+  /// Set body radius and rebuilds fixture.
   set radius(double value) {
     _radius = value;
     if (isLoaded && body.isActive) {
@@ -59,6 +62,7 @@ class _ThoughtBody extends BodyComponent with DragCallbacks, TapCallbacks {
     return body;
   }
 
+  /// Recreates the circle fixture to reflect the current bubble radius.
   void _updateFixture(Body body) {
     final fixture = body.fixtures.singleOrNull;
     if (fixture != null) {
@@ -87,6 +91,7 @@ class _ThoughtBody extends BodyComponent with DragCallbacks, TapCallbacks {
     canvas.restore();
   }
 
+  /// Keeps the bubble inside visible bounds after orientation/size changes.
   void _keepInsideBounds() {
     final bounds = camera.visibleWorldRect;
     final Vector2(x: curX, y: curY) = body.position;
@@ -110,6 +115,7 @@ class _ThoughtBody extends BodyComponent with DragCallbacks, TapCallbacks {
     }
   }
 
+  /// Creates a temporary mouse joint so dragging behaves like a tether.
   @override
   void onDragStart(DragStartEvent event) {
     super.onDragStart(event);
@@ -130,6 +136,7 @@ class _ThoughtBody extends BodyComponent with DragCallbacks, TapCallbacks {
     _mouseJoint?.setTarget(body.worldPoint(event.localEndPosition));
   }
 
+  /// Safely destroys the mouse joint when interaction ends.
   void _removeJoint() {
     if (_mouseJoint == null) return;
     world.destroyJoint(_mouseJoint!);

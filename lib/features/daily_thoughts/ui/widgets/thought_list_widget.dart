@@ -4,12 +4,14 @@ import 'package:thoughts/core/database/app_database.dart';
 import 'package:thoughts/core/i18n/translations.g.dart';
 import 'package:thoughts/core/router/app_router.dart';
 
+/// List representation of thoughts with navigation to details.
 class ThoughtListWidget extends StatelessWidget {
   const ThoughtListWidget({
     required this.thoughts,
     super.key,
   });
 
+  /// Thoughts to render in the list.
   final List<Thought> thoughts;
 
   @Preview()

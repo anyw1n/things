@@ -151,10 +151,19 @@ class $ThoughtsTable extends Thoughts with TableInfo<$ThoughtsTable, Thought> {
 }
 
 class Thought extends DataClass implements Insertable<Thought> {
+  /// Auto-incremented thought id.
   final int id;
+
+  /// Emoji representing the thought.
   final String icon;
+
+  /// Short title.
   final String title;
+
+  /// Full thought body.
   final String content;
+
+  /// Date when thought was created.
   final DateTime createdAt;
   const Thought({
     required this.id,

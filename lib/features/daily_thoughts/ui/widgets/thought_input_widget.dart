@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widget_previews.dart';
 import 'package:thoughts/core/i18n/translations.g.dart';
 
+/// Bottom input widget used to submit new thought text.
 class ThoughtInputWidget extends StatefulWidget {
   const ThoughtInputWidget({
     required this.onSubmit,
@@ -10,8 +11,13 @@ class ThoughtInputWidget extends StatefulWidget {
     super.key,
   });
 
+  /// Callback invoked with trimmed text when submit succeeds validation.
   final ValueChanged<String> onSubmit;
+
+  /// Whether the text field and send button accept user interaction.
   final bool enabled;
+
+  /// Whether a submission is currently in progress.
   final bool isLoading;
 
   @Preview()
@@ -38,6 +44,7 @@ class ThoughtInputWidget extends StatefulWidget {
 class _ThoughtInputWidgetState extends State<ThoughtInputWidget> {
   final _controller = TextEditingController();
 
+  /// Submits non-empty text and clears the field.
   void _submit() {
     final text = _controller.text.trim();
     if (text.isNotEmpty) {

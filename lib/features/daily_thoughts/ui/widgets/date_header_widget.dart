@@ -4,9 +4,11 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:thoughts/core/i18n/translations.g.dart';
 import 'package:thoughts/core/utils/utils.dart';
 
+/// Header that formats selected date as relative day title and subtitle.
 class DateHeaderWidget extends StatelessWidget {
   const DateHeaderWidget({required this.date, super.key});
 
+  /// Date represented by this header.
   final DateTime date;
 
   @Preview()

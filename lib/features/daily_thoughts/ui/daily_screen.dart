@@ -15,6 +15,7 @@ enum _View {
   _View next() => values[(index + 1) % values.length];
 }
 
+/// Main screen that displays day-by-day thoughts and thought creation controls.
 class DailyScreen extends StatefulWidget {
   const DailyScreen({super.key});
 
@@ -29,6 +30,7 @@ class _DailyScreenState extends State<DailyScreen> {
   var _currentPageIndex = 0;
   var _view = _View.bubbles;
 
+  /// Indicates whether the cached "today" value still matches the current day.
   bool get _todaySynchronized => _today == .now().onlyDate;
 
   void _onPageChanged(int index) {
@@ -36,6 +38,7 @@ class _DailyScreenState extends State<DailyScreen> {
     setState(() {});
   }
 
+  /// Repositions the pager to index `0` and refreshes `_today`.
   void _onBackToToday() {
     _today = .now().onlyDate;
     setState(() {});
@@ -58,6 +61,7 @@ class _DailyScreenState extends State<DailyScreen> {
     super.dispose();
   }
 
+  /// Shows success/error snack bar messages emitted by add-thought flow.
   void _addThoughtStateListener(BuildContext context, AddThoughtsState state) {
     final (String? text, AnimatedTopSnackBarType type) = switch (state) {
       AddThoughtsSuccess() => (state.reaction ?? t.dailyScreen.saved, .info),
