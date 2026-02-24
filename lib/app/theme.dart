@@ -9,11 +9,11 @@ final appTheme = ThemeData(
   textTheme: const .new(
     displayMedium: .new(
       fontSize: 36,
-      fontWeight: .w800,
+      fontWeight: FontWeight.w800,
     ),
     displaySmall: .new(
       fontSize: 18,
-      fontWeight: .w500,
+      fontWeight: FontWeight.w500,
     ),
   ),
 );
